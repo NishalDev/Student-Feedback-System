@@ -28,7 +28,7 @@ if (isset($save)) {
 
       //encrypt your password
       $pass = md5($password);
-      $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,department_id,course_id,sem_id,reg_date) VALUES ('$n','$e','$mob','$dep','$course','$sem',NOW())";
+      $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,stu_pass,department_id,course_id,sem_id,reg_date) VALUES ('$n','$e','$mob','$password','$dep','$course','$sem',NOW())";
       $result = mysqli_query($conn, $query);
       if ($result) {
         // Registration successful
@@ -167,7 +167,7 @@ if (isset($save)) {
             </div>
 
             <div class="form-group">
-              <input type="text" class="form-control" id="inputMob" style="color:white;font-size: 1.2em"
+              <input type="number" class="form-control" id="inputMob" style="color:white;font-size: 1.2em"
                 placeholder="Mobile Number" maxlength="10" name="mob" required>
             </div>
             <div class="form-group">

@@ -12,7 +12,7 @@ if (isset($save)) {
   } else {
     $pass = md5($password);
 
-    $sql = mysqli_query($conn, "SELECT * FROM stu_regi where stu_email='$e' and stu_pass='$password'");
+    $sql = mysqli_query($conn, "SELECT * FROM stu_regi where stu_email='$e' AND stu_pass='$password'");
 
     $r = mysqli_num_rows($sql);
 
@@ -20,7 +20,7 @@ if (isset($save)) {
       $_SESSION['stu_regi'] = $e;
       header('location:user/dashboard/dashboard.php');
     } else {
-
+      
       $err = "<font color='red'>Invalid login details</font>";
 
     }
