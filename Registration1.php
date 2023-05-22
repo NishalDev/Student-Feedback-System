@@ -14,56 +14,32 @@ if (isset($save)) {
     $err = "<font color='red'><h3 align='center'>Query Error: " . mysqli_error($conn) . "</h3></font>";
   } else {
     $r = mysqli_num_rows($sql);
-  
-  if ($r > 0) {
-    $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
-  } else if (strlen($mob) != 10) {
-    $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
-  } else {
 
-    //image
-    // $image = $_FILES['image']['name'];
+    if ($r > 0) {
+      $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
+    } else if (strlen($mob) != 10) {
+      $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
+    } else {
 
-    // $target = "images/" . basename($image);
+      //image
+      // $image = $_FILES['image']['name'];
 
-    //encrypt your password
-    $pass = md5($password);
+      // $target = "images/" . basename($image);
 
-    $departmentIdQuery = "SELECT department_id FROM department WHERE department_name='$dep'";
-    $departmentIdResult = mysqli_query($conn, $departmentIdQuery);
-    $departmentIdRow = mysqli_fetch_assoc($departmentIdResult);
-    $departmentId = $departmentIdRow['department_id'];
-    $courseIdQuery = "SELECT course_id FROM course WHERE course_name='$course'";
-    $courseIdResult = mysqli_query($conn, $courseIdQuery);
-    $courseIdRow = mysqli_fetch_assoc($courseIdResult);
-    $courseId = $courseIdRow['course_id'];
-    $semIdQuery = "SELECT sem_id FROM semester WHERE sem_name='$sem'";
-    $semIdResult = mysqli_query($conn, $semIdQuery);
-    $semIdRow = mysqli_fetch_assoc($semIdResult);
-    $semId = $semIdRow['sem_id'];
-    $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,departmentId,courseId,semId,reg_date) VALUES ('$n','$e','$mob','$dep','$course','$sem',NOW())";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-      // Registration successful
-      $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
-  } else {
-      // Handle the case when the insert query fails
-      $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
+      //encrypt your password
+      $pass = md5($password);
+      $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,department_id,course_id,sem_id,reg_date) VALUES ('$n','$e','$mob','$dep','$course','$sem',NOW())";
+      $result = mysqli_query($conn, $query);
+      if ($result) {
+        // Registration successful
+        $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
+      } else {
+        // Handle the case when the insert query fails
+        $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
+      }
+
+    }
   }
-
-
-
-    // //upload image
-
-    // mkdir("images/$stu_email");
-
-    // move_uploaded_file($_FILES['image']['tmp_name'], "images/$stu_email/" . $_FILES['image']['name']);
-
-
-    $err = "<h3 align='center' style='color: blue'>Registration successfull !!<h3>";
-
-  }
-}
 }
 
 ?>
