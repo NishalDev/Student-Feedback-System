@@ -1,11 +1,13 @@
 <?php
 session_start();
-include('../dbconfig.php');
-$user= $_SESSION['user'];
-if($user=="")
-{header('location:../index.php');}
-$sql=mysqli_query($conn,"select * from user where email='$user' ");
-$users=mysqli_fetch_assoc($sql);
+
+include('../../dbconfig.php');
+$user = $_SESSION['stu_regi'];
+if ($user == "") {
+    header('location:../index.php');
+}
+$sql = mysqli_query($conn, "select * from stu_regi where stu_email='$user' ");
+$users = mysqli_fetch_assoc($sql);
 //print_r($users);
 ?>
 
@@ -59,8 +61,9 @@ $users=mysqli_fetch_assoc($sql);
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
-                        Hello <?php echo $users['name'];?>
-                </a>
+                        Hello
+                        <?php echo $users['stu_user']; ?>
+                    </a>
                 </div>
 
                 <ul class="nav">
@@ -76,7 +79,7 @@ $users=mysqli_fetch_assoc($sql);
                             <p>User Profile</p>
                         </a>
                     </li>
-                   
+
 
                 </ul>
             </div>
@@ -86,12 +89,13 @@ $users=mysqli_fetch_assoc($sql);
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="#">Dashboard</a>
                     </div>
                     <div class="collapse navbar-collapse">
@@ -175,23 +179,23 @@ $users=mysqli_fetch_assoc($sql);
                 <ul>
                     <li>
                         <a href="#">
-                                Home
-                            </a>
+                            Home
+                        </a>
                     </li>
                     <li>
                         <a href="#">
-                                Company
-                            </a>
+                            Company
+                        </a>
                     </li>
                     <li>
                         <a href="#">
-                                Portfolio
-                            </a>
+                            Portfolio
+                        </a>
                     </li>
                     <li>
                         <a href="#">
-                               Blog
-                            </a>
+                            Blog
+                        </a>
                     </li>
                 </ul>
             </nav>
