@@ -33,6 +33,8 @@ if (isset($save)) {
       if ($result) {
         // Registration successful
         $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
+        header("Location: Login1.php");
+        exit;
       } else {
         // Handle the case when the insert query fails
         $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
@@ -74,7 +76,7 @@ if (isset($save)) {
       width: 100%;
       color: #bfbfbf;
       background-size: cover;
-      background: url("images/blur2.jpg");
+      background: url("images/blur333.jpg");
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
