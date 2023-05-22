@@ -2,28 +2,32 @@
 session_start();
 require('dbconfig.php');
 
-error_reporting(0);
+//error_reporting(0);
 
 extract($_POST);
 if (isset($save)) {
   //check user alereay exists or not
-  $sql = mysqli_query($conn, "select * from stu_regi where email='$stu_email'");
+  $sql = mysqli_query($conn, "SELECT * FROM stu_regi WHERE stu_email='$e'");
 
-  $r = mysqli_num_rows($sql);
-
-  if ($r == true) {
+  if (!$sql) {
+    // Error handling
+    $err = "<font color='red'><h3 align='center'>Query Error: " . mysqli_error($conn) . "</h3></font>";
+  } else {
+    $r = mysqli_num_rows($sql);
+  
+  if ($r > 0) {
     $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
-  } else if (strlen($stu_mob) < 10 || strlen($stu_mob) > 10) {
+  } else if (strlen($mob) != 10) {
     $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
   } else {
 
     //image
-    $image = $_FILES['image']['name'];
+    // $image = $_FILES['image']['name'];
 
-    $target = "images/" . basename($image);
+    // $target = "images/" . basename($image);
 
     //encrypt your password
-    $pass = md5($stu_pass);
+    $pass = md5($password);
 
     $departmentIdQuery = "SELECT department_id FROM department WHERE department_name='$dep'";
     $departmentIdResult = mysqli_query($conn, $departmentIdQuery);
@@ -33,13 +37,21 @@ if (isset($save)) {
     $courseIdResult = mysqli_query($conn, $courseIdQuery);
     $courseIdRow = mysqli_fetch_assoc($courseIdResult);
     $courseId = $courseIdRow['course_id'];
-    $semIdQuery = "SELECT semester_id FROM semester WHERE semester_name='$sem'";
+    $semIdQuery = "SELECT sem_id FROM semester WHERE sem_name='$sem'";
     $semIdResult = mysqli_query($conn, $semIdQuery);
     $semIdRow = mysqli_fetch_assoc($semIdResult);
     $semId = $semIdRow['sem_id'];
-    $query = "INSERT INTO stu_regi values('')";
+    $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,departmentId,courseId,semId,reg_date) VALUES ('$n','$e','$mob','$dep','$course','$sem',NOW())";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+      // Registration successful
+      $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
+  } else {
+      // Handle the case when the insert query fails
+      $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
+  }
 
-    mysqli_query($conn, $query);
+
 
     // //upload image
 
@@ -51,6 +63,7 @@ if (isset($save)) {
     $err = "<h3 align='center' style='color: blue'>Registration successfull !!<h3>";
 
   }
+}
 }
 
 ?>
@@ -230,10 +243,10 @@ if (isset($save)) {
                   $query = "SELECT * FROM semester";
                   $result = mysqli_query($conn, $query);
                   while ($row = mysqli_fetch_assoc($result)) {
-                    if ($row['semester_name'] == "Select Semester") {
-                      echo "<option value='" . $row['semester_id'] . "' style='color: white;'>" . $row['semester_name'] . "</option>";
+                    if ($row['sem_name'] == "Select Semester") {
+                      echo "<option value='" . $row['sem_id'] . "' style='color: white;'>" . $row['sem_name'] . "</option>";
                     } else {
-                      echo "<option value='" . $row['semester_id'] . "' style='color: black;'>" . $row['semester_name'] . "</option>";
+                      echo "<option value='" . $row['sem_id'] . "' style='color: black;'>" . $row['sem_name'] . "</option>";
                     }
                   }
                   ?>
@@ -268,11 +281,11 @@ if (isset($save)) {
                 <input type="password" class="form-control" id="inputConfirmPassword"
                   style="color:white;font-size: 1.2em" placeholder="Confirm Password" name="confirm_password" required>
               </div>
-
+              <div id="passwordError" style="display: none; color: red;">Passwords do not match.</div>
 
               <input type="submit" value="Save" class="btn btn-info" name="save" />
-
               <button type="reset" style="background-color: #ff6600" value="Reset" class="btn btn-warning"> Reset
+              </button>
               </button>
         </form>
       </div>
