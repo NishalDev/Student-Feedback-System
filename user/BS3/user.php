@@ -23,6 +23,21 @@ if ($result) {
             $dep = $row['department_id'];
             $course = $row['course_id'];
             $sem = $row['sem_id']; // ... and so on for other columns
+            $dep_name = "";
+            $dep_query = mysqli_query($conn, "SELECT department_name FROM department WHERE department_id = '$dep'");
+            if ($dep_row = mysqli_fetch_assoc($dep_query)) {
+                $dep_name = $dep_row['department_name'];
+            }
+            $course_name = "";
+            $course_query = mysqli_query($conn, "SELECT course_name FROM course WHERE course_id = '$course'");
+            if ($course_row = mysqli_fetch_assoc($course_query)) {
+                $course_name = $course_row['course_name'];
+            }
+            $sem_name = "";
+            $sem_query = mysqli_query($conn, "SELECT sem_name FROM semester WHERE sem_id = '$sem'");
+            if ($sem_row = mysqli_fetch_assoc($sem_query)) {
+                $sem_name = $sem_row['sem_name'];
+            }
         }
     } else {
         echo "No rows found in the table.";
@@ -127,12 +142,12 @@ mysqli_close($conn);
                             <p>Notifications</p>
                         </a>
                     </li>
-                    <li class="active-pro">
+                    <!-- <li class="active-pro">
                         <a href="upgrade.html">
                             <i class="pe-7s-rocket"></i>
                             <p>Upgrade to PRO</p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -209,7 +224,7 @@ mysqli_close($conn);
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="../logout.php">
                                     <p>Log out</p>
                                 </a>
                             </li>
@@ -264,21 +279,22 @@ mysqli_close($conn);
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <input type="text" class="form-control" value="<?php echo $dep; ?>">
+                                                    <input type="text" class="form-control"
+                                                        value="<?php echo $dep_name; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Course</label>
-                                                    <input type="text" class="form-control" placeholder="Country"
-                                                        value="<?php echo $course; ?>">
+                                                    <input type="text" class="form-control"
+                                                        value="<?php echo $course_name; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Semester</label>
-                                                    <input type="number" class="form-control"
-                                                        value="<?php echo $sem; ?>">
+                                                    <input type="text" class="form-control"
+                                                        value="<?php echo $sem_name; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -345,32 +361,17 @@ mysqli_close($conn);
                     <nav class="pull-left">
                         <ul>
                             <li>
-                                <a href="#">
+                                <a href="../../home.php">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
+                                <a href="../../about.php">
+                                    About
                                 </a>
                             </li>
                         </ul>
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy;
-                        <script>document.write(new Date().getFullYear())</script> <a
-                            href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                    </p>
+                    </nav>                   
                 </div>
             </footer>
 
