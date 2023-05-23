@@ -6,8 +6,9 @@ error_reporting(0);
 
 //echo $_SESSION['admin'];
 
-if(!isset($_SESSION['admin']))
-{header('location:../home.php');}
+if (!isset($_SESSION['admin'])) {
+    header('location:../home.php');
+}
 
 ?>
 
@@ -42,19 +43,27 @@ if(!isset($_SESSION['admin']))
 
 
     <!--     Fonts and icons     -->
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
+
     <style>
+        .main-panel {
+            background-image: url('assets/img/image7.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
 
-      .main-panel{
-        background-image: url('assets/img/image7.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-
-      }
-
+        }
     </style>
 
 </head>
@@ -69,11 +78,11 @@ if(!isset($_SESSION['admin']))
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Hello Admin
-                     </a>
-                     <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
+                    </a>
+                    <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
 
-                     <br>
-                     <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
+                    <br>
+                    <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
 
                 </div>
                 <br>
@@ -87,47 +96,59 @@ if(!isset($_SESSION['admin']))
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Faculty
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Faculty
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a></li>
-                          <li><a href="show_faculty1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a>
+                            </li>
+                            <li><a href="show_faculty1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty
+                                </a></li>
+                        </ul>
                     </li>
                     <br>
 
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Student
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Student
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="display_student1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Student</a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
+                                    Student</a></li>
+                        </ul>
                     </li>
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-book"></i>
-                              Feedback
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-book"></i>
+                            Feedback
+                            <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                        <li><a href="feedback1.php"><i class="fa fa-eye" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a></li>
-                        <li><a href="feedback_average1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback Average </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="feedback1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a>
+                            </li>
+                            <li><a href="feedback_average1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
+                                    Average </a></li>
+                        </ul>
                     </li>
                     <br>
 
@@ -142,35 +163,36 @@ if(!isset($_SESSION['admin']))
             <nav class="navbar navbar-inverse navbar-fixed">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="#">Dashboard</a>
                     </div>
                     <div class="collapse navbar-collapse">
-                      <ul class="nav navbar-nav navbar-left">
-                          <li>
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                  <i class="fa fa-dashboard"></i>
-                                  <p class="hidden-lg hidden-md">Dashboard</p>
-                              </a>
-                          </li>
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-dashboard"></i>
+                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                </a>
+                            </li>
 
 
-                      </ul>
+                        </ul>
 
-                      <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
 
-                          <li>
-                              <a href="logout.php">
-                                  <p>Log out</p>
-                              </a>
-                          </li>
-                          <li class="separator hidden-lg"></li>
-                      </ul>
+                            <li>
+                                <a href="logout.php">
+                                    <p>Log out</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg"></li>
+                        </ul>
                     </div>
                 </div>
             </nav>
@@ -187,7 +209,7 @@ if(!isset($_SESSION['admin']))
                         <div class="col-md-5">
                             <div class="card">
 
-                                   <h1>Hello Admin </h3>
+                                <h1>Hello Admin </h3>
 
                                     <hr>
                                     <h3>Welcome to your dashboard </h3>
@@ -204,39 +226,39 @@ if(!isset($_SESSION['admin']))
 
                     <div class="row">
 
-                      <div class="col-md-3">
+                        <div class="col-md-3">
 
-                      </div>
+                        </div>
 
-                      <div class="col-md-5">
-                          <div class="card">
-
-
-                      <?php
-                      //all complaints
-                      $qq=mysqli_query($conn,"select * from faculty ");
-                      $rows=mysqli_num_rows($qq);
-                      echo "<h2 style='color: #00ff00'>Total Number of Faculty : $rows</h2>";
-
-                      //all emegency compalints
-                      $q=mysqli_query($conn,"select * from user");
-                      $r1=mysqli_num_rows($q);
-                      echo "<h2 style='color:  #ff3399'>Total Number of Student : $r1</h2>";
+                        <div class="col-md-5">
+                            <div class="card">
 
 
-                      //all users
-                      $q2=mysqli_query($conn,"select * from feedback");
-                      $r2=mysqli_num_rows($q2);
-                      echo "<h2 style='color:black'>Total Number feedback given by users  : $r2</h2>";
+                                <?php
+                                //all complaints
+                                $qq = mysqli_query($conn, "select * from faculty ");
+                                $rows = mysqli_num_rows($qq);
+                                echo "<h2 style='color: #00ff00'>Total Number of Faculty : $rows</h2>";
+
+                                //all emegency compalints
+                                $q = mysqli_query($conn, "select * from user");
+                                $r1 = mysqli_num_rows($q);
+                                echo "<h2 style='color:  #ff3399'>Total Number of Student : $r1</h2>";
+
+
+                                //all users
+                                $q2 = mysqli_query($conn, "select * from feedback");
+                                $r2 = mysqli_num_rows($q2);
+                                echo "<h2 style='color:black'>Total Number feedback given by users  : $r2</h2>";
 
 
 
 
-                      ?>
+                                ?>
 
 
-                                                  </div>
-                                              </div>
+                            </div>
+                        </div>
 
 
                     </div>

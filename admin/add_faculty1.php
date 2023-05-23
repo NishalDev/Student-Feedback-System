@@ -1,54 +1,61 @@
 <?php
 session_start();
 include('../dbconfig.php');
-error_reporting(0);
+//error_reporting(0);
 
-if(!isset($_SESSION['admin']))
-{header('location:../home.php');}
+if (!isset($_SESSION['admin'])) {
+    header('location:../home.php');
+}
 
-	extract($_POST);
-	if(isset($save))
-	{
-		if(strlen($mob)<10 || strlen($mob)>10)
-		{
-		$err="<font color='blue' size='5px'><center>Mobile number must be 10 digit</center></font>";
-		}
-		else
-		{
+extract($_POST);
+if (isset($save)) {
 
-		$temp=substr($name,0,4);
-		$temp1=substr($mob,0,4);
-		$user_name=$temp.$temp1;
+    $sql = mysqli_query($conn, "SELECT * FROM fac_regi WHERE fac_email='$e'");
 
-    $q=mysqli_query($conn,"select * from faculty where email='$email'");
-	  $r=mysqli_num_rows($q);
+    if (!$sql) {
+        // Error handling
+        $err = "<font color='red'><h3 align='center'>Query Error: " . mysqli_error($conn) . "</h3></font>";
+    } else {
+        $r = mysqli_num_rows($sql);
 
-		if($r)
-		{
-			  $q1=mysqli_query($conn,"select * from faculty where email='$email' and programme='$prg' and semester='$sem'");
-				$r1=mysqli_num_rows($q1);
+        if ($r > 0) {
+            $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
+            //   } else if (strlen($mob) != 10) {
+            //     $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
+        } else {
 
-				if($r1)
-				{
-					$err="<font color='blue' size='5px'><center>This faculty has already taken course in this semester.</center></font>";
-				}
-				else
-				{
-					mysqli_query($conn,"insert into faculty values('','$user_name','$name','$Designation','$prg','$sem','$email','$pass','$mob',now(),'0','$course','$code')");
+            //image
+            // $image = $_FILES['image']['name'];
 
-					$err="<font color='blue' size='5px'><center>New Faculty Successfully Added.</center></font>";
-				}
+            // $target = "images/" . basename($image);
 
-		}
-		else
-		{
-			mysqli_query($conn,"insert into faculty values('','$user_name','$name','$Designation','$prg','$sem','$email','$pass','$mob',now(),'0','$course','$code')");
+            //encrypt your password
+            $pass = md5($password);
+            $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,reg_date) VALUES ('$n','$e','$password',NOW())";
 
-	   	$err="<font color='blue' size='5px'><center>New Faculty Successfully Added.</center></font>";
-		}
-	 }
-	}
-
+            $result = mysqli_query($conn, $query);
+            if ($result) {
+                // Registration successful
+                $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
+                //   header("Location: Login1.php");
+                // exit;
+            } else {
+                // Handle the case when the insert query fails
+                $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
+            }
+            $facultyId = mysqli_insert_id($conn);
+            $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, department_id, course_id, sem_id) VALUES ($facultyId, $dep, $course, $sem)";
+            mysqli_query($conn, $queryFacultySubject);
+            if (mysqli_affected_rows($conn) > 0) {
+                echo "Data inserted into the faculty_subject table successfully.";
+            } else {
+                echo "Failed to insert data into the faculty_subject table.";
+            }
+        }
+    }
+   
+}
+//mysqli_close($conn);
 ?>
 
 <!doctype html>
@@ -85,23 +92,20 @@ if(!isset($_SESSION['admin']))
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <style>
+        .wrapper {
+            background-image: url('assets/img/image7.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
 
-      .wrapper{
-        background-image: url('assets/img/image7.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
+        }
 
-      }
+        .panel-default {
+            background-color: white;
+            margin-left: 50px;
+            margin-right: 50px;
+            padding: 10px 10px;
 
-      .panel-default
-      {
-        background-color: white;
-        margin-left: 50px;
-        margin-right: 50px;
-        padding: 10px 10px;
-
-      }
-
+        }
     </style>
 
 </head>
@@ -118,12 +122,12 @@ if(!isset($_SESSION['admin']))
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Hello Admin
-                     </a>
+                    </a>
 
-										 <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
+                    <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
 
-                     <br>
-                     <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
+                    <br>
+                    <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
 
                 </div>
                 <br>
@@ -137,47 +141,59 @@ if(!isset($_SESSION['admin']))
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Faculty
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Faculty
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a></li>
-                          <li><a href="show_faculty1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a>
+                            </li>
+                            <li><a href="show_faculty1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty
+                                </a></li>
+                        </ul>
                     </li>
                     <br>
 
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Student
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Student
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="display_student1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Student</a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
+                                    Student</a></li>
+                        </ul>
                     </li>
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-book"></i>
-                              Feedback
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-book"></i>
+                            Feedback
+                            <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                        <li><a href="feedback1.php"><i class="fa fa-eye" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a></li>
-                        <li><a href="feedback_average1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback Average </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="feedback1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a>
+                            </li>
+                            <li><a href="feedback_average1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
+                                    Average </a></li>
+                        </ul>
                     </li>
                     <br>
 
@@ -189,182 +205,207 @@ if(!isset($_SESSION['admin']))
         </div>
 
         <div class="main-panel">
-          <nav class="navbar navbar-inverse navbar-fixed">
-              <div class="container-fluid">
-                  <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                      <a class="navbar-brand" href="#">Dashboard</a>
-                  </div>
-                  <div class="collapse navbar-collapse">
-                      <ul class="nav navbar-nav navbar-left">
-                          <li>
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                  <i class="fa fa-dashboard"></i>
-                                  <p class="hidden-lg hidden-md">Dashboard</p>
-                              </a>
-                          </li>
-
-
-                      </ul>
-
-                      <ul class="nav navbar-nav navbar-right">
-
-                          <li>
-                              <a href="logout.php">
-                                  <p>Log out</p>
-                              </a>
-                          </li>
-                          <li class="separator hidden-lg"></li>
-                      </ul>
-                  </div>
-              </div>
-          </nav>
-
-          <form method="post" style="margin-top: 80px">
-            <div style="color: red "><?php
-
-              echo @$err;
-
-                ?>
-            <div class="content" >
+            <nav class="navbar navbar-inverse navbar-fixed">
                 <div class="container-fluid">
-                    <div class="row panel panel-default">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title" style="color:orange">Add Faculty</h4>
-                                </div>
-                                <div class="content">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Dashboard</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-dashboard"></i>
+                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                </a>
+                            </li>
 
-                                        <div class="row">
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label><b> Name </b></label>
-                                                    <input type="text" class="form-control" placeholder="name" value="<?php echo @$name;?>" name="name" required>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <a href="logout.php">
+                                    <p>Log out</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <form method="post" style="margin-top: 80px">
+                <div style="color: red ">
+                    <?php
+
+                    echo @$err;
+
+                    ?>
+                    <div class="content">
+                        <div class="container-fluid">
+                            <div class="row panel panel-default">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="header">
+                                            <h4 class="title" style="color:orange">Add Faculty</h4>
+                                        </div>
+                                        <div class="content">
+
+                                            <div class="row">
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label><b> Name </b></label>
+                                                        <input type="text" class="form-control" placeholder="name"
+                                                            name="n" required>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label><b> Email </b></label>
+                                                        <input type="text" class="form-control" placeholder="email"
+                                                            name="e" required>
+                                                    </div>
+                                                </div>
 
-                                            <div class="col-md-4">
+
+                                                <!-- <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label><b> Designation </b></label>
-                                                    <input type="text" class="form-control" placeholder="Designation"  value="<?php echo @$Designation;?>" name="Designation" required>
+                                                    <input type="text" class="form-control" placeholder="Designation"  value="<?php echo @$Designation; ?>" name="Designation" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
-
+                                                <!-- 
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="number" class="form-control" placeholder="Mobile Number" value="<?php echo @$mob;?>" maxlength="10" name="mob"  required>
+                                                    <input type="number" class="form-control" placeholder="Mobile Number" value="<?php echo @$mob; ?>" maxlength="10" name="mob"  required>
+                                                </div>-->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+
+                                                    <select class="form-control" id="inputDepartment"
+                                                        style="font-size: 1.2em; background-color: transparent "
+                                                        name="dep">
+                                                        <option value="" disabled selected style="color: white;">
+                                                            Department
+                                                        </option>
+                                                        <?php
+                                                        // Assuming you have a database connection established, fetch department data from the database
+                                                        $query = "SELECT * FROM department";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            if ($row['department_name'] == "Select Department") {
+                                                                echo "<option value='" . $row['department_id'] . "' style='color: white;'>" . $row['department_name'] . "</option>";
+                                                            } else {
+                                                                echo "<option value='" . $row['department_id'] . "' style='color: black;'>" . $row['department_name'] . "</option>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
-                                            </div>
-
-																						<div class="col-md-2">
-																							<div class="form-group">
-																									<label>Course Code</label>
-																									<input type="text" class="form-control" placeholder="Course Code" value="<?php echo @$code;?>" name="code"  required>
-																							</div>
-																					</div>
 
 
 
-																					<div class="col-md-4">
-																							<div class="form-group">
-																									<label>Course Name</label>
-																									<input type="text" class="form-control" placeholder="Course" value="<?php echo @$course;?>" name="course"  required>
-																							</div>
-																					</div>
 
-                                        </div>
+                                                <div class="col-md-4">
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                              <div class="form-group">
-                                                  <label>Email Address</label>
-                                                  <input type="email" class="form-control" placeholder="Email Address" value="<?php echo @$email;?>"  name="email" required>
-                                              </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-5">
-
-                                                  <div class="form-group">
-                                                    <label>Program</label>
-                                                    <select class="form-control" id="inputProgram" style="font-size: 16px" placeholder="Program" name="prg" value="<?php echo @$prg;?>">
-
-                                                      <option style="color:black">MCA</option>
-                                                      <option style="color:black">BCA</option>
-                                                      <option style="color:black">B.Tech</option>
-                                                      <option style="color:black">M.Tech</option>
-
+                                                    <select class=" form-control" id="inputCourse"
+                                                        style="font-size: 1.2em; background-color: transparent"
+                                                        name="course" required>
+                                                        <option value="" disabled selected style="color: white;">
+                                                            Course</option>
+                                                        <?php
+                                                        // Assuming you have a database connection established, fetch course data from the database
+                                                        $query = "SELECT * FROM course";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            if ($row['course_name'] == "Select Course") {
+                                                                echo "<option value='" . $row['course_id'] . "' style='color: white;'>" . $row['course_name'] . "</option>";
+                                                            } else {
+                                                                echo "<option value='" . $row['course_id'] . "' style='color: black;'>" . $row['course_name'] . "</option>";
+                                                            }
+                                                        }
+                                                        ?>
                                                     </select>
 
-                                                  </div>
+                                                </div>
 
-                                            </div>
 
-                                            <div class="col-md-5">
-                                                <div class="form-group">
 
-                                                  <label>Semester</label>
-                                                  <select class="form-control" id="inputSemester" style="font-size: 16px" placeholder="Semester" name="sem" required>
 
-                                                    <option style="color:black">i</option>
-                                                    <option style="color:black">ii</option>
-                                                    <option style="color:black">iii</option>
-                                                    <option style="color:black">iv</option>
-                                                    <option style="color:black">v</option>
-                                                    <option style="color:black">vi</option>
-                                                    <option style="color:black">vii</option>
-                                                    <option style="color:black">viii</option>
 
-                                                  </select>
+                                                <div class="col-md-4">
+
+                                                    <select class="form-control" id="inputSemester"
+                                                        style="font-size: 1.2em; background-color: transparent"
+                                                        name="sem" required>
+                                                        <option value="" disabled selected style="color: white;">
+                                                            Semester</option>
+                                                        <?php
+                                                        // Assuming you have a database connection established, fetch semester data from the database
+                                                        $query = "SELECT * FROM semester";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            if ($row['sem_name'] == "Select Semester") {
+                                                                echo "<option value='" . $row['sem_id'] . "' style='color: white;'>" . $row['sem_name'] . "</option>";
+                                                            } else {
+                                                                echo "<option value='" . $row['sem_id'] . "' style='color: black;'>" . $row['sem_name'] . "</option>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
 
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div style="margin-top: 20px;"></div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                              <div class="form-group">
-                                                  <label>Password</label>
-                                                  <input type="password" class="form-control" placeholder="Password" value="<?php echo @$pass;?>"  name="pass" required>
-                                              </div>
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Password" name="password" required>
+                                                    </div>
+                                                </div>
+
                                             </div>
-
                                         </div>
+                                        <div style="margin-left: 15px;">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-success" name="save"
+                                                            value="Add New Faculty">
+                                                    </div>
+                                                </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                              <div class="form-group">
-                                                <input type="submit" class="btn btn-success" name="save" value="Add New Faculty">
-                                              </div>
                                             </div>
-
                                         </div>
 
 
 
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                      </div>
-
+                    </div>
                 </div>
-            </div>
-          </div>
 
-        </form>
+            </form>
 
 
 
