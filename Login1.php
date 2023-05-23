@@ -18,7 +18,7 @@ if (isset($save)) {
 
     if ($r == true) {
       $_SESSION['stu_regi'] = $e;
-      header('Location: user/dashboard/dashboard.php');
+      header('Location: user/BS3/dashboard.php');
     } else {
 
       $err = "<font color='red'>Invalid login details</font>";
