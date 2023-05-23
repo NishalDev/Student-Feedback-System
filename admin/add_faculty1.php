@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin'])) {
 extract($_POST);
 if (isset($save)) {
 
-    $sql = mysqli_query($conn, "SELECT * FROM fac_regi WHERE fac_email='$e'");
+    $sql = mysqli_query($conn, "SELECT * FROM fac_regi WHERE Fac_email='$e'");
 
     if (!$sql) {
         // Error handling
@@ -37,27 +37,26 @@ if (isset($save)) {
             if ($result) {
                 // Registration successful
                 $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
-                //   header("Location: Login1.php");
-                // exit;
+                $facultyId = mysqli_insert_id($conn);
+
+                $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, subject_id, course_id, department_id, sem_id) VALUES ($facultyId, $sub, $course, $sem)";
+                $resultFacultySubject = mysqli_query($conn, $queryFacultySubject);
+
+                if ($resultFacultySubject) {
+                    // Faculty subject insertion successful
+                    echo "Data inserted into the faculty_subject table successfully.";
+                } else {
+                    // Handle the case when the faculty subject insertion fails
+                    echo "Failed to insert data into the faculty_subject table.";
+                }
             } else {
                 // Handle the case when the insert query fails
                 $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
             }
-            $facultyId = mysqli_insert_id($conn);
-            $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, department_id, course_id, sem_id) VALUES ($facultyId, $dep, $course, $sem)";
-            mysqli_query($conn, $queryFacultySubject);
-            if (mysqli_affected_rows($conn) > 0) {
-                echo "Data inserted into the faculty_subject table successfully.";
-            } else {
-                echo "Failed to insert data into the faculty_subject table.";
-            }
         }
     }
-   
 }
-//mysqli_close($conn);
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -291,15 +290,15 @@ if (isset($save)) {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="number" class="form-control" placeholder="Mobile Number" value="<?php echo @$mob; ?>" maxlength="10" name="mob"  required>
+                                                    <input type="number" class="form-control" placeholder="Mobile Number" maxlength="10" name="mob"  required>
                                                 </div>-->
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
 
                                                     <select class="form-control" id="inputDepartment"
                                                         style="font-size: 1.2em; background-color: transparent "
-                                                        name="dep">
+                                                        name="dep" require onchange="getCourse()">
                                                         <option value="" disabled selected style="color: white;">
                                                             Department
                                                         </option>
@@ -321,12 +320,12 @@ if (isset($save)) {
 
 
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
 
                                                     <select class=" form-control" id="inputCourse"
                                                         style="font-size: 1.2em; background-color: transparent"
-                                                        name="course" required>
-                                                        <option value="" disabled selected style="color: white;">
+                                                        name="course" onchange="getSubject()" required>
+                                                        <option value="" disabled selected style="color: black;">
                                                             Course</option>
                                                         <?php
                                                         // Assuming you have a database connection established, fetch course data from the database
@@ -348,12 +347,12 @@ if (isset($save)) {
 
 
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
 
                                                     <select class="form-control" id="inputSemester"
                                                         style="font-size: 1.2em; background-color: transparent"
-                                                        name="sem" required>
-                                                        <option value="" disabled selected style="color: white;">
+                                                        name="sem" onchange="getSubject()" required>
+                                                        <option value="" disabled selected style="color: black;">
                                                             Semester</option>
                                                         <?php
                                                         // Assuming you have a database connection established, fetch semester data from the database
@@ -369,47 +368,91 @@ if (isset($save)) {
                                                         ?>
                                                     </select>
 
-                                                </div>
-                                            </div>
-                                            <div style="margin-top: 20px;"></div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
 
-                                                        <input type="password" class="form-control"
-                                                            placeholder="Password" name="password" required>
+                                                </div>
+
+
+
+
+                                                <div class="col-md-2">
+
+                                                    <select class="form-control" id="inputSubject"
+                                                        style="font-size: 1.2em; background-color: transparent"
+                                                        name="sem" required>
+                                                        <option value="" disabled selected style="color: black;">
+                                                            Subject</option>
+                                                        <?php
+                                                        // Assuming you have a database connection established, fetch semester data from the database
+                                                        $query = "SELECT * FROM subject";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            if ($row['subject_name'] == "Select Subject") {
+                                                                echo "<option value='" . $row['subject_id'] . "' style='color: white;'>" . $row['subject_name'] . "</option>";
+                                                            } else {
+                                                                echo "<option value='" . $row['subject_id'] . "' style='color: black;'>" . $row['subject_name'] . "</option>";
+                                                            }
+                                                        }
+
+                                                        ?>
+
+                                                    </select>
+                                                    <div style="margin-left: 15px;">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <input type="submit" class="btn btn-success"
+                                                                        name="save" value="Submit"
+                                                                        onclick="resetFormFields()">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
-                                                </div>
 
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div style="margin-left: 15px;">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="submit" class="btn btn-success" name="save"
-                                                            value="Add New Faculty">
-                                                    </div>
+                                        <div style="margin-top: 20px;"></div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+
+                                                    <input type="password" class="form-control" placeholder="Password"
+                                                        name="password" required>
                                                 </div>
-
                                             </div>
+
                                         </div>
-
-
-
                                     </div>
+                                    <div style="margin-left: 15px;">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-success" name="save"
+                                                        value="Add New Faculty">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-
-            </form>
-
-
-
         </div>
+
+        </form>
+
+
+
+    </div>
     </div>
 
 
@@ -433,5 +476,172 @@ if (isset($save)) {
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+<script>
+    function getCourse() {
+        var departmentId = document.getElementById("inputDepartment").value;
+
+        // Make an AJAX request to get_courses.php with the selected departmentId
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "get_courses.php?departmentId=" + departmentId, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 400) {
+                var courses = JSON.parse(xhr.responseText);
+                var courseSelect = document.getElementById("inputCourse");
+
+                // Clear previous options
+                courseSelect.innerHTML = "";
+
+                // Add the fetched courses as options
+                for (var i = 0; i < courses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = courses[i].course_id;
+                    option.text = courses[i].course_name;
+                    option.style.color = "black"; // Set the font color to black
+                    courseSelect.appendChild(option);
+                }
+            }
+        };
+
+        // Send the AJAX request
+        xhr.send();
+    }
+</script>
+<script>
+    function getSubject() {
+        var courseId = document.getElementById("inputCourse").value;
+        var semesterId = document.getElementById("inputSemester").value;
+
+        // Make an AJAX request to get_subject.php with the selected courseId and semesterId
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "get_subject.php?courseId=" + courseId + "&semesterId=" + semesterId, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 400) {
+                var subjects = JSON.parse(xhr.responseText);
+                var subjectSelect = document.getElementById("inputSubject");
+
+                // Clear previous options
+                subjectSelect.innerHTML = "";
+
+                // Add the fetched subjects as options
+                for (var i = 0; i < subjects.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = subjects[i].subject_id;
+                    option.text = subjects[i].subject_name;
+                    option.style.color = "black"; // Set the font color to black
+                    subjectSelect.appendChild(option);
+                }
+            }
+        };
+
+        // Send the AJAX request
+        xhr.send();
+    }
+</script>
+<script>
+    function resetFormFields() {
+        // Reset the selected values of the form fields
+        document.getElementById("inputDepartment").selectedIndex = -1;  // Select the default option (disabled)
+        document.getElementById("inputCourse").selectedIndex = -1;
+        document.getElementById("inputSemester").selectedIndex = -1;
+        document.getElementById("inputSubject").selectedIndex = -1;
+        // Fetch the original options from the database and re-populate the dropdown lists
+        fetchOriginalOptions();
+
+        // Alternatively, you can manually reset the dropdown lists to their original options
+        // based on the values stored in the 'originalOptions' variable
+
+        // Example for resetting 'inputDepartment' dropdown list
+        var departmentSelect = document.getElementById("inputDepartment");
+        departmentSelect.innerHTML = "";
+        var departmentOption = document.createElement("option");
+        departmentOption.text = "Department";
+        departmentOption.disabled = true;
+        departmentOption.selected = true;
+        departmentOption.style.color = "white";
+        departmentSelect.add(departmentOption);
+        originalOptions.department.forEach(function (option) {
+            var departmentOption = document.createElement("option");
+            departmentOption.value = option.value;
+            departmentOption.text = option.label;
+            if (option.label == "Select Department") {
+                departmentOption.style.color = "white";
+            } else {
+                departmentOption.style.color = "black";
+            }
+            departmentSelect.add(departmentOption);
+        });
+
+        // Reset other dropdown lists in a similar manner
+
+    }
+
+</script>
+<script>
+    function fetchOriginalOptions() {
+        // Fetch the original options from the database using AJAX or any other method
+
+        // Example AJAX implementation using jQuery
+        $.ajax({
+            url: "fetch_options.php", // Replace with your actual PHP file or API endpoint
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                // Assuming the response is an array of objects containing the options data
+                // You may need to modify the code according to your specific database structure
+
+                // Initialize the 'originalOptions' variable
+                var originalOptions = {
+                    department: [],
+                    course: [],
+                    semester: [],
+                    subject: []
+                };
+
+                // Populate the 'originalOptions' variable with the fetched options
+                response.forEach(function (option) {
+                    // Assuming each option object has 'value' and 'label' properties
+
+                    // Populate the 'department' options
+                    if (option.type === "department") {
+                        originalOptions.department.push({
+                            value: option.value,
+                            label: option.label
+                        });
+                    }
+
+                    // Populate the 'course' options
+                    if (option.type === "course") {
+                        originalOptions.course.push({
+                            value: option.value,
+                            label: option.label
+                        });
+                    }
+
+                    // Populate the 'semester' options
+                    if (option.type === "semester") {
+                        originalOptions.semester.push({
+                            value: option.value,
+                            label: option.label
+                        });
+                    }
+
+                    // Populate the 'subject' options
+                    if (option.type === "subject") {
+                        originalOptions.subject.push({
+                            value: option.value,
+                            label: option.label
+                        });
+                    }
+                });
+
+                // Reset the dropdown lists to their original options
+                resetDropdownLists(originalOptions);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
 
 </html>

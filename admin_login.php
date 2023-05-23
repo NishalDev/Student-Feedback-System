@@ -7,7 +7,7 @@
 	extract($_POST);
 	if(isset($login))
 	{
-$que=mysqli_query($conn,"SELECT admin_email and admin_pass from admin where admin_email='$email' and admin_pass='$pass'");
+$que=mysqli_query($conn,"SELECT admin_email AND admin_pass FROM admin WHERE admin_email='$email' and admin_pass='$pass'");
 		$row=mysqli_num_rows($que);
 		if($row==true)
 			{
