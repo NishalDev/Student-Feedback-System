@@ -31,15 +31,18 @@ if (isset($save)) {
 
             //encrypt your password
             $pass = md5($password);
-            $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,reg_date) VALUES ('$n','$e','$password',NOW())";
-
+            
+            // $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,reg_date) VALUES ('$n','$e','$password',NOW())";
+            $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,regi_date) VALUES ('$n','$e','$password',Now())";
+           
             $result = mysqli_query($conn, $query);
             if ($result) {
+               
                 // Registration successful
                 $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
                 $facultyId = mysqli_insert_id($conn);
-
-                $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, subject_id, course_id, department_id, sem_id) VALUES ($facultyId, $sub, $course, $sem)";
+                    
+                $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, subject_id, course_id, department_id, sem_id) VALUES ($facultyId, $sub, $course, $dep,$sem)";
                 $resultFacultySubject = mysqli_query($conn, $queryFacultySubject);
 
                 if ($resultFacultySubject) {
@@ -378,7 +381,7 @@ if (isset($save)) {
 
                                                     <select class="form-control" id="inputSubject"
                                                         style="font-size: 1.2em; background-color: transparent"
-                                                        name="sem" required>
+                                                        name="sub" required>
                                                         <option value="" disabled selected style="color: black;">
                                                             Subject</option>
                                                         <?php
@@ -396,23 +399,23 @@ if (isset($save)) {
                                                         ?>
 
                                                     </select>
-                                                    <div style="margin-left: 15px;">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <input type="submit" class="btn btn-success"
-                                                                        name="save" value="Submit"
-                                                                        onclick="resetFormFields()">
-                                                                </div>
-                                                            </div>
 
-                                                        </div>
-                                                    </div>
 
 
                                                 </div>
+                                                <!-- <div style="margin-left: 15px;"> -->
+
+                                                    <!-- <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-success" name="save"
+                                                                value="Submit">
+                                                        </div>
+                                                    </div> -->
+
+
+                                                <!-- </div> -->
                                             </div>
-                                        </div>
+                                        
                                         <div style="margin-top: 20px;"></div>
 
                                         <div class="row">
@@ -537,13 +540,13 @@ if (isset($save)) {
         xhr.send();
     }
 </script>
-<script>
+<!-- <script>
     function resetFormFields() {
         // Reset the selected values of the form fields
         document.getElementById("inputDepartment").selectedIndex = -1;  // Select the default option (disabled)
-        document.getElementById("inputCourse").selectedIndex = -1;
-        document.getElementById("inputSemester").selectedIndex = -1;
-        document.getElementById("inputSubject").selectedIndex = -1;
+        document.getElementById("inputCourse").selectedIndex = 0;
+        document.getElementById("inputSemester").selectedIndex = 0;
+        document.getElementById("inputSubject").selectedIndex = 0;
         // Fetch the original options from the database and re-populate the dropdown lists
         fetchOriginalOptions();
 
@@ -642,6 +645,6 @@ if (isset($save)) {
             }
         });
     }
-</script>
+</script> -->
 
 </html>
