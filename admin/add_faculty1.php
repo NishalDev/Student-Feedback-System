@@ -31,27 +31,33 @@ if (isset($save)) {
 
             //encrypt your password
             $pass = md5($password);
-            
+
             // $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,reg_date) VALUES ('$n','$e','$password',NOW())";
             $query = "INSERT INTO fac_regi (Fac_user,Fac_email,Fac_pass,regi_date) VALUES ('$n','$e','$password',Now())";
-           
+
             $result = mysqli_query($conn, $query);
+
             if ($result) {
-               
+
                 // Registration successful
                 $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
-                $facultyId = mysqli_insert_id($conn);
-                    
+                $queryGetFacId = "SELECT @facId AS FacId";
+                $resultGetFacId = mysqli_query($conn, $queryGetFacId);
+                $row = mysqli_fetch_assoc($resultGetFacId);
+                $facultyId = $row['FacId'];
+
+                // echo "$facultyId................................";
+
                 $queryFacultySubject = "INSERT INTO faculty_subject (Fac_id, subject_id, course_id, department_id, sem_id) VALUES ($facultyId, $sub, $course, $dep,$sem)";
                 $resultFacultySubject = mysqli_query($conn, $queryFacultySubject);
 
-                if ($resultFacultySubject) {
-                    // Faculty subject insertion successful
-                    echo "Data inserted into the faculty_subject table successfully.";
-                } else {
-                    // Handle the case when the faculty subject insertion fails
-                    echo "Failed to insert data into the faculty_subject table.";
-                }
+                // if ($resultFacultySubject) {
+                //     // Faculty subject insertion successful
+                //     echo "Data inserted into the faculty_subject table successfully.";
+                // } else {
+                //     // Handle the case when the faculty subject insertion fails
+                //     echo "Failed to insert data into the faculty_subject table.";
+                // }
             } else {
                 // Handle the case when the insert query fails
                 $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
@@ -405,7 +411,7 @@ if (isset($save)) {
                                                 </div>
                                                 <!-- <div style="margin-left: 15px;"> -->
 
-                                                    <!-- <div class="col-md-2">
+                                                <!-- <div class="col-md-2">
                                                         <div class="form-group">
                                                             <input type="submit" class="btn btn-success" name="save"
                                                                 value="Submit">
@@ -415,47 +421,47 @@ if (isset($save)) {
 
                                                 <!-- </div> -->
                                             </div>
-                                        
-                                        <div style="margin-top: 20px;"></div>
 
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
+                                            <div style="margin-top: 20px;"></div>
 
-                                                    <input type="password" class="form-control" placeholder="Password"
-                                                        name="password" required>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Password" name="password" required>
+                                                    </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style="margin-left: 15px;">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <input type="submit" class="btn btn-success" name="save"
-                                                        value="Add New Faculty">
+                                        <div style="margin-left: 15px;">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-success" name="save"
+                                                            value="Add New Faculty">
+                                                    </div>
                                                 </div>
+
                                             </div>
-
                                         </div>
+
+
+
                                     </div>
-
-
-
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
+
+            </form>
+
+
+
         </div>
-
-        </form>
-
-
-
-    </div>
     </div>
 
 
