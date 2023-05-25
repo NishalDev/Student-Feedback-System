@@ -1,22 +1,12 @@
-<script type="text/javascript">
-function deletes(id)
-{
-	a=confirm('Are You Sure To Remove This Record ?')
-	 if(a)
-     {
-        window.location.href='delete_faculty.php?id='+id;
-     }
-}
-</script>
-
 <?php
 session_start();
 include('../dbconfig.php');
-error_reporting(0);
+//error_reporting(0);
 
 
-if(!isset($_SESSION['admin']))
-	{header('location:../home.php');}
+if (!isset($_SESSION['admin'])) {
+    header('location:../home.php');
+}
 
 ?>
 
@@ -55,23 +45,20 @@ if(!isset($_SESSION['admin']))
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <style>
+        .wrapper {
+            background-image: url('assets/img/image7.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
 
-      .wrapper{
-        background-image: url('assets/img/image7.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
+        }
 
-      }
+        .panel-default {
+            background-color: white;
+            margin-left: 50px;
+            margin-right: 50px;
+            padding: 10px 10px;
 
-      .panel-default
-      {
-        background-color: white;
-        margin-left: 50px;
-        margin-right: 50px;
-        padding: 10px 10px;
-
-      }
-
+        }
     </style>
 
 </head>
@@ -88,11 +75,11 @@ if(!isset($_SESSION['admin']))
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Hello Admin
-                     </a>
-										 <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
+                    </a>
+                    <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
 
-                     <br>
-                     <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
+                    <br>
+                    <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
 
                 </div>
                 <br>
@@ -106,47 +93,59 @@ if(!isset($_SESSION['admin']))
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Faculty
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Faculty
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a></li>
-                          <li><a href="show_faculty1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a>
+                            </li>
+                            <li><a href="show_faculty1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty
+                                </a></li>
+                        </ul>
                     </li>
                     <br>
 
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Student
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Student
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="display_student1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Student</a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
+                                    Student</a></li>
+                        </ul>
                     </li>
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-book"></i>
-                              Feedback
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-book"></i>
+                            Feedback
+                            <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                        <li><a href="feedback1.php"><i class="fa fa-eye" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a></li>
-                        <li><a href="feedback_average1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback Average </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="feedback1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a>
+                            </li>
+                            <li><a href="feedback_average1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
+                                    Average </a></li>
+                        </ul>
                     </li>
                     <br>
 
@@ -158,118 +157,150 @@ if(!isset($_SESSION['admin']))
         </div>
 
         <div class="main-panel">
-          <nav class="navbar navbar-inverse navbar-fixed">
-              <div class="container-fluid">
-                  <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                      <a class="navbar-brand" href="#">Dashboard</a>
-                  </div>
-                  <div class="collapse navbar-collapse">
-										<ul class="nav navbar-nav navbar-left">
-												<li>
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-																<i class="fa fa-dashboard"></i>
-																<p class="hidden-lg hidden-md">Dashboard</p>
-														</a>
-												</li>
-
-
-										</ul>
-
-										<ul class="nav navbar-nav navbar-right">
-
-												<li>
-														<a href="logout.php">
-																<p>Log out</p>
-														</a>
-												</li>
-												<li class="separator hidden-lg"></li>
-										</ul>
-                  </div>
-              </div>
-          </nav>
-
-          <form method="post" style="margin-top: 80px">
-            <div style="color: red "><?php
-
-              echo @$err;
-
-                ?>
-            <div class="content" >
+            <nav class="navbar navbar-inverse navbar-fixed">
                 <div class="container-fluid">
-                    <div class="row panel panel-default" style="width: 1200px">
-                        <div class="col-md-12" >
-                            <div class="card" style="padding: 10px">
-                                <div class="header">
-                                    <h4 class="title" style="color:orange">Manage Faculty</h4>
-                                </div>
-                                <div class="content" style="padding: 10px">
-
-                                        <div class="row" style="padding: 10px">
-
-                                          <?php
-                                          	echo "<table class='table table-responsive table-bordered table-striped table-hover' style=margin:15px;>";
-                                          	echo "<tr>";
-
-                                          	echo "<th>S.No</th>";
-                                          	echo "<th>Name</th>";
-                                          	echo "<th>Designation</th>";
-                                          	echo "<th>Programme</th>";
-                                          	echo "<th>Semester</th>";
-                                          	echo "<th>User Name</th>";
-                                          	echo "<th>Email</th>";
-                                          	echo "<th>Mobile</th>";
-                                          	echo "<th>Password</th>";
-                                          	echo "<th>Update</th>";
-                                          	echo "<th>Delete</th>";
-                                          	echo "</tr>";
-
-                                          	$i=1;
-                                          	$que=mysqli_query($conn,"select * from faculty");
-
-                                          	while($row=mysqli_fetch_array($que))
-                                          	{
-                                          		echo "<tr>";
-                                          		echo "<td>".$i."</td>";
-                                          		echo "<td>".$row['Name']."</td>";
-                                          		echo "<td>".$row['designation']."</td>";
-                                          		echo "<td>".$row['programme']."</td>";
-                                          		echo "<td>".$row['semester']."</td>";
-                                          		echo "<td>".$row['user_alias']."</td>";
-                                          		echo "<td>".$row['email']."</td>";
-                                          		echo "<td>".$row['mobile']."</td>";
-                                          		echo "<td>".$row['password']."</td>";
-                                          		echo "<td class='text-center'><a href='edit_faculty1.php'>  <i class='pe-7s-pen'></i> </a></td>";
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Dashboard</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-dashboard"></i>
+                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                </a>
+                            </li>
 
 
-                                          		echo "<td class='text-center'><a href='#' onclick='deletes($row[id])'><i class='pe-7s-close' style='color:red'></i></span></a></td>";
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <a href="logout.php">
+                                    <p>Log out</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <form method="post" style="margin-top: 80px">
+                <div style="color: red ">
+                    <?php
+
+                    echo @$err;
+
+                    ?>
+                    <div class="content">
+
+                        <div class="container-fluid">
+                            <div class="row panel panel-default" style="width: 1200px">
+                                <div class="col-md-12">
+                                    <div class="card1" style="padding: 10px">
+                                        <div style="color: black">
+                                            <div class="header">
+                                                <h4 class="title" style="color:orange">Manage Faculty</h4>
+                                            </div>
+                                            <div class="content" style="padding: 10px">
+
+                                                <div class="row" style="padding: 10px">
+
+                                                    <?php
+                                                    echo "<table class='table table-responsive table-bordered table-striped table-hover' style=margin:15px;>";
+                                                    echo "<tr>";
+
+                                                    echo "<th>S.No</th>";
+                                                    echo "<th>Name</th>";
+                                                    echo "<th>Email</th>";
+                                                    echo "<th>Department</th>";
+                                                    echo "<th>Course</th>";
+                                                    echo "<th>Semester</th>";
+                                                    echo "<th>Subject</th>";
+
+                                                    echo "<th>Update</th>";
+                                                    echo "<th>Delete</th>";
+                                                    echo "</tr>";
+                                                    $i = 1;
+                                                    $query = "SELECT r.Fac_id, r.Fac_user, r.Fac_email, s.department_id, s.course_id, s.sem_id, s.subject_id
+                                                FROM fac_regi r
+                                                INNER JOIN faculty_subject s ON r.Fac_id = s.Fac_id";
+
+                                                    $result = mysqli_query($conn, $query);
+
+                                                    if ($result) {
+                                                        while ($row = mysqli_fetch_array($result)) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . $i . "</td>";
+                                                            echo "<td>" . $row['Fac_user'] . "</td>";
+                                                            echo "<td>" . $row['Fac_email'] . "</td>";
+
+                                                            // Fetch and display the department, course, semester, and subject
+                                                            $departmentId = $row['department_id'];
+                                                            $courseId = $row['course_id'];
+                                                            $semesterId = $row['sem_id'];
+                                                            $subjectId = $row['subject_id'];
+
+                                                            // Query to fetch department name based on dep_id from the relevant table
+                                                            $queryDepartment = "SELECT department_name FROM department WHERE department_id = $departmentId";
+                                                            $resultDepartment = mysqli_query($conn, $queryDepartment);
+                                                            $department = mysqli_fetch_assoc($resultDepartment)['department_name'];
+
+                                                            // Query to fetch course name based on course_id from the relevant table
+                                                            $queryCourse = "SELECT course_name FROM course WHERE course_id = $courseId";
+                                                            $resultCourse = mysqli_query($conn, $queryCourse);
+                                                            $course = mysqli_fetch_assoc($resultCourse)['course_name'];
+
+                                                            // Query to fetch semester name based on semester_id from the relevant table
+                                                            $querySemester = "SELECT sem_name FROM semester WHERE sem_id = $semesterId";
+                                                            $resultSemester = mysqli_query($conn, $querySemester);
+                                                            $semester = mysqli_fetch_assoc($resultSemester)['sem_name'];
+
+                                                            // Query to fetch subject name based on subject_id from the relevant table
+                                                            $querySubject = "SELECT subject_name FROM subject WHERE subject_id = $subjectId";
+                                                            $resultSubject = mysqli_query($conn, $querySubject);
+                                                            $subject = mysqli_fetch_assoc($resultSubject)['subject_name'];
+
+                                                            echo "<td>" . $department . "</td>";
+                                                            echo "<td>" . $course . "</td>";
+                                                            echo "<td>" . $semester . "</td>";
+                                                            echo "<td>" . $subject . "</td>";
+
+                                                            // Rest of your code...
+                                                    
+                                                            echo "</tr>";
+                                                            $i++;
+                                                        }
+                                                    } else {
+                                                        // Handle the case when the query execution fails
+                                                        echo "Error: " . mysqli_error($conn);
+                                                    }
 
 
 
-
-                                          		echo "</tr>";
-                                          		$i++;
-                                          	}
-
-                                          ?>
+                                                    ?>
 
 
+                                                </div>
+
+                                            </div>
                                         </div>
-
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                      </div>
+                    </div>
 
-                </div>
-            </div>
-          </div>
-
-        </form>
+            </form>
 
 
 
@@ -297,5 +328,13 @@ if(!isset($_SESSION['admin']))
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+<script type="text/javascript">
+    function deletes(id) {
+        a = confirm('Are You Sure To Remove This Record ?')
+        if (a) {
+            window.location.href = 'delete_faculty.php?id=' + id;
+        }
+    }
+</script>
 
 </html>
