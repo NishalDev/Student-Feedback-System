@@ -57,7 +57,7 @@ $users = mysqli_fetch_assoc($sql);
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="simple-text">
+                <a href="../../About1.php" class="simple-text">
                     SFS
                 </a>
             </div>
@@ -414,7 +414,7 @@ $users = mysqli_fetch_assoc($sql);
                                 Home
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#">
                                 Company
                             </a>
@@ -428,12 +428,12 @@ $users = mysqli_fetch_assoc($sql);
                             <a href="#">
                                Blog
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
-                <p class="copyright pull-right">
+                <!-- <p class="copyright pull-right">
                     &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
+                </p> -->
             </div>
         </footer>
 

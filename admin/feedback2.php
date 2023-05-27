@@ -4,20 +4,29 @@ function deletes(id)
 	a=confirm('Are You Sure To Remove This Record ?')
 	 if(a)
      {
-        window.location.href='delete_faculty.php?id='+id;
+        window.location.href='delete_feedback.php?id='+id;
      }
 }
 </script>
 
+
 <?php
 session_start();
 include('../dbconfig.php');
-error_reporting(0);
+//error_reporting(0);
 
 
 if(!isset($_SESSION['admin']))
 	{header('location:../home.php');}
 
+$q=mysqli_query($conn,"SELECT * FROM feedback_question");
+$r=mysqli_num_rows($q);
+if($r==false)
+{
+echo "<font color='blue' size='5px'><center><center>No any records found ! </center></font>";
+}
+else
+{
 ?>
 
 <!doctype html>
@@ -65,7 +74,7 @@ if(!isset($_SESSION['admin']))
       .panel-default
       {
         background-color: white;
-        margin-left: 50px;
+        margin-left: 10px;
         margin-right: 50px;
         padding: 10px 10px;
 
@@ -77,7 +86,7 @@ if(!isset($_SESSION['admin']))
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrapper" style="width: 2000px">
         <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
 
             <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
@@ -190,6 +199,7 @@ if(!isset($_SESSION['admin']))
 												</li>
 												<li class="separator hidden-lg"></li>
 										</ul>
+
                   </div>
               </div>
           </nav>
@@ -202,137 +212,73 @@ if(!isset($_SESSION['admin']))
                 ?>
             <div class="content" >
                 <div class="container-fluid">
-                    <div class="row panel panel-default" style="width: 1200px">
+                    <div class="row panel panel-default" style="width: 1600px">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title" style="color:orange">Check Total Feedbacks</h4>
+                                    <h4 class="title" style="color:orange">Add Feedback Q</h4>
                                 </div>
                                 <div class="content">
 
                                         <div class="row">
 
-                                          <form method="post">
-                                          <table class="table table-hover">
-                                          <tr>
+                                          <table class="table table-bordered">
 
-                                          <th> Select Faculty</th>
-                                          <td>
-                                          <select name="faculty" class="form-control">
-                                          	<?php
-                                          	$sql=mysqli_query($conn,"select * from fac_regi");
-                                          	while($r=mysqli_fetch_array($sql))
-                                          	{
-                                          	echo "<option value='".$r['email']."'>".$r['Name']."</option>";
-                                          	}
-                                          		 ?>
-                                          </select>
-                                          </td>
-                                          <td><input name="sub" type="submit" value="Check Total Feedbacks" class="btn btn-success"/></td>
-                                          </tr>
+                                          	<thead >
+
+                                          	<tr class="success">
+                                          		<th>Sr.No</th>
+                                          		<th>Student</th>
+                                          		<th>Teacher</th>
+                                          		<th>Quest1</th>
+                                          		<th>Quest2</th>
+                                          		<th>Quest3</th>
+                                          		<th>Quest4</th>
+                                          		<th>Quest5</th>
+                                          		<th>Quest6</th>
+                                          		<th>Quest7</th>
+                                          		<th>Quest8</th>
+                                          		<th>Quest9</th>
+                                          		<th>Quest10</th>
+                                          		<th>Quest11</th>
+                                          		<th>Quest12</th>
+                                          		<th>Quest13</th>
+                                          		<th>Quest14</th>
+                                          		</tr>
+                                          		</thead>
+
+                                          		<?php
+                                          		$i=1;
+                                          	while($row=mysqli_fetch_array($q))
+                                          		{
+                                          			echo "<tr>";
+                                          			echo "<td>".$i."</td>";
+                                          			echo "<td>".$row[1]."</td>";
+                                          			echo "<td>".$row[2]."</td>";
+                                          			echo "<td>".$row[3]."</td>";
+                                          			echo "<td>".$row[4]."</td>";
+                                          			echo "<td>".$row[5]."</td>";
+                                          			echo "<td>".$row[6]."</td>";
+                                          			echo "<td>".$row[7]."</td>";
+                                          			echo "<td>".$row[8]."</td>";
+                                          			echo "<td>".$row[9]."</td>";
+                                          			echo "<td>".$row[10]."</td>";
+                                          			echo "<td>".$row[11]."</td>";
+                                          			echo "<td>".$row[12]."</td>";
+                                          			echo "<td>".$row[13]."</td>";
+                                          			echo "<td>".$row[14]."</td>";
+                                          			echo "<td>".$row[15]."</td>";
+                                          			echo "<td>".$row[16]."</td>";
+                                          			//echo "<td><a href='#' onclick='deletes($row[id])'>Delete</a></td>";
+                                          			echo "</tr>";
+                                          		$i++;
+                                          		}
+
+                                          		?>
+
+
+
                                           </table>
-                                          </form>
-                                          <hr style="border:1px solid red"/>
-
-
-                                          <?php
-                                          extract($_POST);
-                                          if(isset($sub))
-                                          {
-                                          //Count total Votes
-                                          $r=mysqli_query($conn,"select * from feedback where faculty_id='$faculty'");
-                                          $c=mysqli_num_rows($r);
-                                          echo "<h4 style='color:black'>Total Student Attempts : ".$c."</h4>";
-
-
-
-                                          //question 1 start
-                                          error_reporting(1);
-                                          $q=mysqli_query($conn,"select * from feedback where faculty_id='$faculty'");
-                                          while($res=mysqli_fetch_array($q))
-                                          {
-                                          	if($res[3]==5)
-                                          	{
-                                          	$stongly_agree++;
-                                          	}
-                                          	else if($res[3]==4)
-                                          	{
-                                          	$agree++;
-                                          	}
-                                          	else if($res[3]==3)
-                                          	{
-                                          	$neutral++;
-                                          	}
-                                          	else if($res[3]==2)
-                                          	{
-                                          	$disagree++;
-                                          	}
-                                          	else if($res[3]==1)
-                                          	{
-                                          	$strongly_disagree++;
-                                          	}
-
-                                          }
-                                          //question 1 end
-
-
-                                          //question 2 start
-                                          $q2=mysqli_query($conn,"select * from feedback where faculty_id='$faculty'");
-                                          while($res=mysqli_fetch_array($q2))
-                                          {
-                                          	if($res[4]==5)
-                                          	{
-                                          	$stongly_agree1++;
-                                          	}
-                                          	else if($res[4]==4)
-                                          	{
-                                          	$agree++;
-                                          	}
-                                          	else if($res[4]==3)
-                                          	{
-                                          	$neutral++;
-                                          	}
-                                          	else if($res[4]==2)
-                                          	{
-                                          	$disagree++;
-                                          	}
-                                          	else if($res[4]==1)
-                                          	{
-                                          	$strongly_disagree++;
-                                          	}
-
-                                          }
-                                          //question 2 end
-
-                                          //count
-                                          $t=$stongly_agree+$stongly_agree1;
-                                          echo $t;
-
-
-
-
-
-                                          $q=mysqli_query($conn,"select * from feedback where faculty_id='$faculty'");
-                                          while($res=mysqli_fetch_array($q))
-                                          {
-                                          $count+=$res[3];
-                                          $count+=$res[4];
-                                          $count+=$res[5];
-                                          $count+=$res[6];
-                                          $count+=$res[7];
-                                          $count+=$res[8];
-                                          $count+=$res[9];
-                                          $count+=$res[10];
-                                          $count+=$res[11];
-                                          $count+=$res[12];
-                                          $count+=$res[13];
-                                          $count+=$res[14];
-                                          $count+=$res[15];
-                                          }
-                                          //echo $count;
-                                          }
-                                          ?>
-
 
                                         </div>
 
@@ -374,3 +320,4 @@ if(!isset($_SESSION['admin']))
 <script src="assets/js/demo.js"></script>
 
 </html>
+<?php } ?>

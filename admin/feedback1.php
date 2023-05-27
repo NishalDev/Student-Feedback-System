@@ -1,32 +1,25 @@
 <script type="text/javascript">
-function deletes(id)
-{
-	a=confirm('Are You Sure To Remove This Record ?')
-	 if(a)
-     {
-        window.location.href='delete_feedback.php?id='+id;
-     }
-}
+    function deletes(id) {
+        a = confirm('Are You Sure To Remove This Record ?')
+        if (a) {
+            window.location.href = 'delete_feedback.php?id=' + id;
+        }
+    }
 </script>
-
 
 <?php
 session_start();
 include('../dbconfig.php');
-error_reporting(0);
+include('scripts.php');
+//error_reporting(0);
 
-
-if(!isset($_SESSION['admin']))
-	{header('location:../home.php');}
-
-$q=mysqli_query($conn,"select * from feedback");
-$r=mysqli_num_rows($q);
-if($r==false)
-{
-echo "<font color='blue' size='5px'><center><center>No any records found ! </center></font>";
+if (!isset($_SESSION['admin'])) {
+    header('location:../home.php');
 }
-else
-{
+
+$q = mysqli_query($conn, "SELECT * FROM feedback");
+$r = mysqli_num_rows($q);
+
 ?>
 
 <!doctype html>
@@ -42,7 +35,6 @@ else
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -52,10 +44,8 @@ else
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet" />
 
-
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
-
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -63,23 +53,20 @@ else
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <style>
+        .wrapper {
+            background-image: url('assets/img/image7.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
 
-      .wrapper{
-        background-image: url('assets/img/image7.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
+        }
 
-      }
+        .panel-default {
+            background-color: white;
+            margin-left: 10px;
+            margin-right: 50px;
+            padding: 10px 10px;
 
-      .panel-default
-      {
-        background-color: white;
-        margin-left: 10px;
-        margin-right: 50px;
-        padding: 10px 10px;
-
-      }
-
+        }
     </style>
 
 </head>
@@ -91,17 +78,16 @@ else
 
             <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
 
-
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Hello Admin
-                     </a>
+                    </a>
 
-										 <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
+                    <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
 
-                     <br>
-                     <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
+                    <br>
+                    <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
 
                 </div>
                 <br>
@@ -115,50 +101,60 @@ else
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Faculty
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Faculty
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a></li>
-                          <li><a href="show_faculty1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty </a></li>
-                      </ul>
-                    </li>
-                    <br>
-
-
-                    <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user fa-fw"></i><p>
-                              Student
-                              <b class="caret"></b>
-                          </p>
-
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                          <li><a href="display_student1.php"><i class="fa fa-plus fa-fw" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Student</a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Add Faculty</a>
+                            </li>
+                            <li><a href="show_faculty1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty
+                                </a></li>
+                        </ul>
                     </li>
                     <br>
 
                     <li class="dropdown" style="color:black">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-book"></i>
-                              Feedback
-                              <b class="caret"></b>
-                          </p>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>
+                            <p>
+                                Student
+                                <b class="caret"></b>
+                            </p>
 
-                      </a>
-                      <ul class="dropdown-menu" style="background-color: black">
-                        <li><a href="feedback1.php"><i class="fa fa-eye" style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a></li>
-                        <li><a href="feedback_average1.php"><i class="fa fa-eye"  style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback Average </a></li>
-                      </ul>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
+                                    Student</a></li>
+                        </ul>
                     </li>
                     <br>
 
+                    <li class="dropdown" style="color:black">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-book"></i>
+                            Feedback
+                            <b class="caret"></b>
+                            </p>
+
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: black">
+                            <li><a href="feedback1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a>
+                            </li>
+                            <li><a href="feedback_average1.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
+                                    Average </a></li>
+                        </ul>
+                    </li>
+                    <br>
 
 
 
@@ -167,136 +163,215 @@ else
         </div>
 
         <div class="main-panel">
-          <nav class="navbar navbar-inverse navbar-fixed">
-              <div class="container-fluid">
-                  <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                      <a class="navbar-brand" href="#">Dashboard</a>
-                  </div>
-                  <div class="collapse navbar-collapse">
-										<ul class="nav navbar-nav navbar-left">
-												<li>
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-																<i class="fa fa-dashboard"></i>
-																<p class="hidden-lg hidden-md">Dashboard</p>
-														</a>
-												</li>
-
-
-										</ul>
-
-										<ul class="nav navbar-nav navbar-right">
-
-												<li>
-														<a href="logout.php">
-																<p>Log out</p>
-														</a>
-												</li>
-												<li class="separator hidden-lg"></li>
-										</ul>
-
-                  </div>
-              </div>
-          </nav>
-
-          <form method="post" style="margin-top: 80px">
-            <div style="color: red "><?php
-
-              echo @$err;
-
-                ?>
-            <div class="content" >
+            <nav class="navbar navbar-inverse navbar-fixed">
                 <div class="container-fluid">
-                    <div class="row panel panel-default" style="width: 1600px">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title" style="color:orange">Feedback</h4>
-                                </div>
-                                <div class="content">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Dashboard</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-dashboard"></i>
+                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                </a>
+                            </li>
 
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <a href="logout.php">
+                                    <p>Log out</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg"></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+            <form method="post" style="margin-top: 80px">
+                <div style="color: red ">
+                    <?php
+
+                    echo @$err;
+
+                    ?>
+                    <div class="content">
+                        <div class="container-fluid">
+                            <div class="row panel panel-default" style="width: auto ">
+                                <div class="col-md-12">
+
+                                    <div class="header">
+                                        <h4 class="title" style="color:orange">Add Feedback Questions</h4>
+                                    </div>
+
+                                    <div class="content">
                                         <div class="row">
+                                            <div class="col-md-3">
 
-                                          <table class="table table-bordered">
-
-                                          	<thead >
-
-                                          	<tr class="success">
-                                          		<th>Sr.No</th>
-                                          		<th>Student</th>
-                                          		<th>Teacher</th>
-                                          		<th>Quest1</th>
-                                          		<th>Quest2</th>
-                                          		<th>Quest3</th>
-                                          		<th>Quest4</th>
-                                          		<th>Quest5</th>
-                                          		<th>Quest6</th>
-                                          		<th>Quest7</th>
-                                          		<th>Quest8</th>
-                                          		<th>Quest9</th>
-                                          		<th>Quest10</th>
-                                          		<th>Quest11</th>
-                                          		<th>Quest12</th>
-                                          		<th>Quest13</th>
-                                          		<th>Quest14</th>
-                                          		</tr>
-                                          		</thead>
-
-                                          		<?php
-                                          		$i=1;
-                                          	while($row=mysqli_fetch_array($q))
-                                          		{
-                                          			echo "<tr>";
-                                          			echo "<td>".$i."</td>";
-                                          			echo "<td>".$row[1]."</td>";
-                                          			echo "<td>".$row[2]."</td>";
-                                          			echo "<td>".$row[3]."</td>";
-                                          			echo "<td>".$row[4]."</td>";
-                                          			echo "<td>".$row[5]."</td>";
-                                          			echo "<td>".$row[6]."</td>";
-                                          			echo "<td>".$row[7]."</td>";
-                                          			echo "<td>".$row[8]."</td>";
-                                          			echo "<td>".$row[9]."</td>";
-                                          			echo "<td>".$row[10]."</td>";
-                                          			echo "<td>".$row[11]."</td>";
-                                          			echo "<td>".$row[12]."</td>";
-                                          			echo "<td>".$row[13]."</td>";
-                                          			echo "<td>".$row[14]."</td>";
-                                          			echo "<td>".$row[15]."</td>";
-                                          			echo "<td>".$row[16]."</td>";
-                                          			//echo "<td><a href='#' onclick='deletes($row[id])'>Delete</a></td>";
-                                          			echo "</tr>";
-                                          		$i++;
-                                          		}
-
-                                          		?>
+                                                <select class="form-control" id="inputDepartment"
+                                                    style="font-size: 1.2em; background-color: transparent " name="dep"
+                                                    require onchange="getCourse()">
+                                                    <option value="" disabled selected style="color: white;">
+                                                        Department
+                                                    </option>
+                                                    <?php
+                                                    // Assuming you have a database connection established, fetch department data from the database
+                                                    $query = "SELECT * FROM department";
+                                                    $result = mysqli_query($conn, $query);
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        if ($row['department_name'] == "Select Department") {
+                                                            echo "<option value='" . $row['department_id'] . "' style='color: white;'>" . $row['department_name'] . "</option>";
+                                                        } else {
+                                                            echo "<option value='" . $row['department_id'] . "' style='color: black;'>" . $row['department_name'] . "</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
 
 
 
-                                          </table>
+
+                                            <div class="col-md-3">
+
+                                                <select class=" form-control" id="inputCourse"
+                                                    style="font-size: 1.2em; background-color: transparent"
+                                                    name="course" onchange="getSubject()" required>
+                                                    <option value="" disabled selected style="color: black;">
+                                                        Course</option>
+                                                    <?php
+                                                    // Assuming you have a database connection established, fetch course data from the database
+                                                    $query = "SELECT * FROM course";
+                                                    $result = mysqli_query($conn, $query);
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        if ($row['course_name'] == "Select Course") {
+                                                            echo "<option value='" . $row['course_id'] . "' style='color: white;'>" . $row['course_name'] . "</option>";
+                                                        } else {
+                                                            echo "<option value='" . $row['course_id'] . "' style='color: black;'>" . $row['course_name'] . "</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+
+                                            </div>
+
+
+
+
+
+                                            <div class="col-md-3">
+
+                                                <select class="form-control" id="inputSemester"
+                                                    style="font-size: 1.2em; background-color: transparent" name="sem"
+                                                    onchange="getSubject()" required>
+                                                    <option value="" disabled selected style="color: black;">
+                                                        Semester</option>
+                                                    <?php
+                                                    // Assuming you have a database connection established, fetch semester data from the database
+                                                    $query = "SELECT * FROM semester";
+                                                    $result = mysqli_query($conn, $query);
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        if ($row['sem_name'] == "Select Semester") {
+                                                            echo "<option value='" . $row['sem_id'] . "' style='color: white;'>" . $row['sem_name'] . "</option>";
+                                                        } else {
+                                                            echo "<option value='" . $row['sem_id'] . "' style='color: black;'>" . $row['sem_name'] . "</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <div class="row">
+
+
+
+
+                                                <div class="col-md-3">
+
+                                                    <select class="form-control" id="inputSubject"
+                                                        style="font-size: 1.2em; background-color: transparent"
+                                                        name="sub" required>
+                                                        <option value="" disabled selected style="color: black;">
+                                                            Subject</option>
+                                                        <?php
+                                                        // Assuming you have a database connection established, fetch semester data from the database
+                                                        $query = "SELECT * FROM subject";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            if ($row['subject_name'] == "Select Subject") {
+                                                                echo "<option value='" . $row['subject_id'] . "' style='color: white;'>" . $row['subject_name'] . "</option>";
+                                                            } else {
+                                                                echo "<option value='" . $row['subject_id'] . "' style='color: black;'>" . $row['subject_name'] . "</option>";
+                                                            }
+                                                        }
+
+                                                        ?>
+
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                         </div>
 
-                            </div>
-                        </div>
-                      </div>
 
-                </div>
-            </div>
-          </div>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group" style="height: auto">
+                                                    <textarea class="form-control" placeholder="Question" name="q"
+                                                        required></textarea>
+                                                </div>
+                                            </div>
 
-        </form>
 
+                                            <div class="col-md-3">
+
+                                                <select class="form-control" id="inputSubject"
+                                                    style="font-size: 1.2em; background-color: transparent" name="sub"
+                                                    required>
+                                                    <option value="" disabled selected style="color: black;">
+                                                        Options</option>
+                                                    <?php
+                                                    // Assuming you have a database connection established, fetch semester data from the database
+                                                    $query = "SELECT * FROM feedback_option";
+                                                    $result = mysqli_query($conn, $query);
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        echo "<option value='" . $row['Option_id'] . "' style='color: black;'>". $row['Option1'] .", ". $row['Option2'].", ". $row['Option3'] .", ". $row['Option4'] .", ".  $row['Option5'] ."</option>";
+                                                    }
+                                                    ?>
+
+                                                    ?>
+
+                                                </select>
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                    </div>
+
+            </form>
 
 
         </div>
     </div>
-
 
 </body>
 
@@ -320,4 +395,4 @@ else
 <script src="assets/js/demo.js"></script>
 
 </html>
-<?php } ?>
+<?php ?>

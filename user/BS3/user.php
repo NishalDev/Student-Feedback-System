@@ -94,8 +94,8 @@ mysqli_close($conn);
 
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        Creative Tim
+                    <a href="../../About1.php" class="simple-text">
+                        SFS
                     </a>
                 </div>
 
