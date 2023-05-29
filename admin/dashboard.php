@@ -67,11 +67,12 @@ include('../dbconfig.php');
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
 
-                        <li><a href="dashboard.php?info=update_password"><i class="fa fa-gear fa-fw"></i>Change Password</a>
+                        <li><a href="dashboard.php?info=update_password"><i class="fa fa-gear fa-fw"></i>Change
+                                Password</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -90,52 +91,58 @@ include('../dbconfig.php');
                             <a href="dashboard.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 
-						<li>
+                        <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i>Faculty<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="dashboard.php?info=add_faculty"><i class="fa fa-plus fa-fw"></i> Add Faculty</a>
+                                    <a href="dashboard.php?info=add_faculty"><i class="fa fa-plus fa-fw"></i> Add
+                                        Faculty</a>
                                 </li>
-								 <li>
-                                    <a href="dashboard.php?info=show_faculty"><i class="fa fa-eye"></i> Manage faculty</a>
+                                <li>
+                                    <a href="dashboard.php?info=show_faculty"><i class="fa fa-eye"></i> Manage
+                                        faculty</a>
                                 </li>
-							</ul>
+                            </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
 
-						<li>
+                        <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i>Student<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 
-								 <li>
-                                    <a href="dashboard.php?info=display_student"><i class="fa fa-eye"></i> Manage Student</a>
+                                <li>
+                                    <a href="dashboard.php?info=display_student"><i class="fa fa-eye"></i> Manage
+                                        Student</a>
                                 </li>
 
-							</ul>
+                            </ul>
                         </li>
 
 
 
-		<!-- feedback-->
-		<li>
-         <a href="#"><i class="fa fa-user fa-book"></i>Feedback<span class="fa arrow"></span></a>
-           <ul class="nav nav-second-level">
+                        <!-- feedback-->
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-book"></i>Feedback<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
 
-<li><a href="dashboard.php?info=feedback"><i class="fa fa-eye"></i> feedback</a></li>
-<li><a href="dashboard.php?info=feedback_average"><i class="fa fa-eye"></i> feedback Average</a></li>
+                                <li><a href="dashboard.php?info=feedback"><i class="fa fa-eye"></i> feedback</a></li>
+                                <li><a href="dashboard.php?info=feedback_manage"><i class="fa fa-eye"></i> Manage
+                                        Feedback</a></li>
+                                <li><a href="dashboard.php?info=feedback_average"><i class="fa fa-eye"></i> feedback
+                                        Average</a></li>
 
 
-							</ul>
+                            </ul>
                         </li>
-		<!--feedback end-->
+                        <!--feedback end-->
 
 
 
 
-		<li>
-			<a href="dashboard.php?info=contact"><i class="fa fa-eye"></i> Contact us</a>
-		</li>
+                        <li>
+                            <a href="dashboard.php?info=contact"><i class="fa fa-eye"></i> Contact us</a>
+                        </li>
 
 
 
@@ -150,67 +157,38 @@ include('../dbconfig.php');
             <div class="row">
                 <div class="col-lg-12">
 
-                	<?php
-								@$id=$_GET['id'];
-								@$info=$_GET['info'];
-								if($info!="")
-								{
-									if($info=="add_faculty")
-										{
-											include('add_faculty.php');
-										}
+                    <?php
+                    @$id = $_GET['id'];
+                    @$info = $_GET['info'];
+                    if ($info != "") {
+                        if ($info == "add_faculty") {
+                            include('add_faculty.php');
+                        } elseif ($info == "show_faculty") {
+                            include('show_faculty.php');
+                        } elseif ($info == "edit_faculty") {
+                            include('edit_faculty.php');
+                        } elseif ($info == "display_student") {
+                            include('display_student.php');
+                        } elseif ($info == "contact") {
+                            include('contact.php');
+                        } elseif ($info == "feedback") {
+                            include('feedback.php');
+                        } elseif ($info == "feedback_manage") {
+                            include('feedback_manage.php');
+                        } elseif ($info == "feedback_average") {
+                            include('feedback_average.php');
+                        } else if ($info == "update_password") {
+                            include('update_password.php');
+                        }
 
-									elseif($info=="show_faculty")
-										{
-											include('show_faculty.php');
-										}
-
-
-									elseif($info=="edit_faculty")
-										{
-											include('edit_faculty.php');
-										}
-
-									elseif($info=="display_student")
-										{
-											include('display_student.php');
-										}
-
-
-
-									elseif($info=="contact")
-										{
-											include('contact.php');
-										}
-									elseif($info=="feedback")
-										{
-											include('feedback.php');
-										}
-										elseif($info=="feedback_average")
-										{
-											include('feedback_average.php');
-										}
+                    } else {
+                        include('dashboard_home.php');
+                    }
 
 
+                    ?>
 
-
-
-
-										else if($info=="update_password")
-										{
-										include('update_password.php');
-										}
-
-								}
-								else
-								{
-								include('dashboard_home.php');
-								}
-
-
-							?>
-
-				</div>
+                </div>
                 <!-- /.col-lg-12 -->
             </div>
 

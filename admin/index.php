@@ -145,6 +145,10 @@ if (!isset($_SESSION['admin'])) {
                             <li><a href="feedback1.php"><i class="fa fa-eye"
                                         style="height: 2px;width:2px;margin-right:50px;color:white"></i>Feedback</a>
                             </li>
+                            <li><a href="feedback_manage.php"><i class="fa fa-eye"
+                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Feedback</a>
+                            </li>
+                            
                             <li><a href="feedback_average1.php"><i class="fa fa-eye"
                                         style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
                                     Average </a></li>
