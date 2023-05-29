@@ -18,17 +18,26 @@ if (!isset($_SESSION['admin'])) {
 }
 
 extract($_POST);
+
 if (isset($save)) {
-    $query = "INSERT INTO feedback (department_id,course_id,sem_id,subject_id,Option_id,question) VALUES ('$dep','$course','$sem','$sub','$opt','$q')";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        $err = "<h3 align='center' style='color: blue'>successful!</h3>";
-    }
-    else{
-        $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
+    foreach ($q as $question) {
+        $query = "INSERT INTO feedback (department_id, course_id, sem_id, subject_id, Option_id, question) VALUES ('$dep', '$course', '$sem', '$sub', '$opt', '$question')";
+        // Check if the option key exists in the $opt array
+        
+            $result = mysqli_query($conn, $query);
+
+            if (!$result) {
+                $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
+                break; // Exit the loop if an error occurs
+            }
+        } 
+
+    if (!isset($err)) {
+        $err = "<h3 align='center' style='color: blue'>Successful!</h3>";
     }
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -337,61 +346,55 @@ if (isset($save)) {
 
 
                                     </div>
+
                                     <div style="margin-top: 20px;">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group" style="height: auto">
-                                                    <textarea class="form-control" placeholder="Question" name="q"
-                                                        required></textarea>
+                                        <div id="questionFields">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" placeholder="Question" name="q[]"
+                                                            required></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-md-3">
-
                                                 <select class="form-control" id="inputSubject"
                                                     style="font-size: 1.2em; background-color: transparent" name="opt"
                                                     required>
-                                                    <option value="" disabled selected style="color: black;">
-                                                        Options</option>
+                                                    <option value="" disabled selected style="color: black;">Options
+                                                    </option>
                                                     <?php
-                                                    // Assuming you have a database connection established, fetch semester data from the database
+                                                    // Assuming you have a database connection established, fetch options data from the database
                                                     $query = "SELECT * FROM options";
                                                     $result = mysqli_query($conn, $query);
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         echo "<option value='" . $row['Option_id'] . "' style='color: black;'>" . $row['option1'] . ", " . $row['option2'] . ", " . $row['option3'] . ", " . $row['option4'] . ", " . $row['option5'] . "</option>";
                                                     }
                                                     ?>
-
-
-
                                                 </select>
                                             </div>
-                                            <div style="margin-left: 15px;">
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="submit" class="btn btn-success" name="save"
-                                                            value="Add Question">
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-
-
                                         </div>
-
                                     </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="button" class="btn btn-primary" value="New Field"
+                                                onclick="addNewField()">
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 15px;">
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-success" name="save"
+                                                    value="Add Question">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
             </form>
-
-
         </div>
     </div>
-
 </body>
 
 <!--   Core JS Files   -->
@@ -412,6 +415,22 @@ if (isset($save)) {
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+<script>
+    function addNewField() {
+        var newField = document.createElement('div');
+        newField.innerHTML = '<div class="col-md-4">' +
+            '<div class="form-group">' +
+            '<textarea class="form-control" placeholder="Question" name="q[]" required></textarea>' +
+            '</div>' +
+            '</div>';
+           
+
+        var questionFields = document.getElementById('questionFields');
+        questionFields.appendChild(newField);
+    }
+</script>
+
+
 
 </html>
 <?php ?>
