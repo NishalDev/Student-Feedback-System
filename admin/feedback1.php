@@ -17,9 +17,17 @@ if (!isset($_SESSION['admin'])) {
     header('location:../home.php');
 }
 
-$q = mysqli_query($conn, "SELECT * FROM feedback");
-$r = mysqli_num_rows($q);
-
+extract($_POST);
+if (isset($save)) {
+    $query = "INSERT INTO feedback (department_id,course_id,sem_id,subject_id,Option_id,question) VALUES ('$dep','$course','$sem','$sub','$opt','$q')";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        $err = "<h3 align='center' style='color: blue'>successful!</h3>";
+    }
+    else{
+        $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
+    }
+}
 ?>
 
 <!doctype html>
@@ -342,22 +350,33 @@ $r = mysqli_num_rows($q);
                                             <div class="col-md-3">
 
                                                 <select class="form-control" id="inputSubject"
-                                                    style="font-size: 1.2em; background-color: transparent" name="sub"
+                                                    style="font-size: 1.2em; background-color: transparent" name="opt"
                                                     required>
                                                     <option value="" disabled selected style="color: black;">
                                                         Options</option>
                                                     <?php
                                                     // Assuming you have a database connection established, fetch semester data from the database
-                                                    $query = "SELECT * FROM feedback_option";
+                                                    $query = "SELECT * FROM options";
                                                     $result = mysqli_query($conn, $query);
                                                     while ($row = mysqli_fetch_assoc($result)) {
-                                                        echo "<option value='" . $row['Option_id'] . "' style='color: black;'>". $row['Option1'] .", ". $row['Option2'].", ". $row['Option3'] .", ". $row['Option4'] .", ".  $row['Option5'] ."</option>";
+                                                        echo "<option value='" . $row['Option_id'] . "' style='color: black;'>" . $row['option1'] . ", " . $row['option2'] . ", " . $row['option3'] . ", " . $row['option4'] . ", " . $row['option5'] . "</option>";
                                                     }
                                                     ?>
 
-                                                    ?>
+
 
                                                 </select>
+                                            </div>
+                                            <div style="margin-left: 15px;">
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-success" name="save"
+                                                            value="Add Question">
+                                                    </div>
+                                                </div>
+
+
                                             </div>
 
 
