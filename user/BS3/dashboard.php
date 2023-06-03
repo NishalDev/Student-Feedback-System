@@ -76,9 +76,9 @@ $users = mysqli_fetch_assoc($sql);
                     </a>
                 </li>
                 <li>
-                    <a href="table.html">
+                    <a href="give_feedback.php">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>Feedback</p>
                     </a>
                 </li>
                 <li>

@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0) {
         $options = array_values($optionsRow);
 
         // Display the question
-        $output .= "<h3>$question</h3>";
+        $output .= "<h3 contenteditable='true' class='editable-question'>$question</h3>";
 
         // Display the options
         $output .= "<ul>";
