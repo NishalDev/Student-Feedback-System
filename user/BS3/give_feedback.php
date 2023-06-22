@@ -10,7 +10,7 @@ $sql = "SELECT * FROM stu_regi";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
-    $stud = $_SESSION['stu_id'];
+  
 
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
