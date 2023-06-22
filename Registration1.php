@@ -7,44 +7,44 @@ require('dbconfig.php');
 extract($_POST);
 if (isset($save)) {
   //check user alereay exists or not
-    $sql = mysqli_query($conn, "SELECT * FROM stu_regi WHERE stu_email='$e'");
+  $sql = mysqli_query($conn, "SELECT * FROM stu_regi WHERE stu_email='$e'");
 
-    if (!$sql) {
-      // Error handling
-      $err = "<font color='red'><h3 align='center'>Query Error: " . mysqli_error($conn) . "</h3></font>";
+  if (!$sql) {
+    // Error handling
+    $err = "<font color='red'><h3 align='center'>Query Error: " . mysqli_error($conn) . "</h3></font>";
+  } else {
+    $r = mysqli_num_rows($sql);
+
+    if ($r > 0) {
+      $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
+    } else if (strlen($mob) != 10) {
+      $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
     } else {
-      $r = mysqli_num_rows($sql);
 
-      if ($r > 0) {
-        $err = "<font color='red'><h3 align='center'>This user already exists</h3></font>";
-      } else if (strlen($mob) != 10) {
-        $err = "<font color='red'><center>Mobile number must be 10 digit</center></font>";
+      //image
+      // $image = $_FILES['image']['name'];
+
+      // $target = "images/" . basename($image);
+
+      //encrypt your password
+      $pass = md5($password);
+      $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,stu_pass,department_id,course_id,sem_id,reg_date) VALUES ('$n','$e','$mob','$password','$dep','$course','$sem',NOW())";
+      $result = mysqli_query($conn, $query);
+      if ($result) {
+        // Registration successful
+        $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
+        header("Location: Login1.php");
+        exit;
       } else {
-
-        //image
-        // $image = $_FILES['image']['name'];
-
-        // $target = "images/" . basename($image);
-
-        //encrypt your password
-        $pass = md5($password);
-        $query = "INSERT INTO stu_regi (stu_user,stu_email,stu_mob,stu_pass,department_id,course_id,sem_id,reg_date) VALUES ('$n','$e','$mob','$password','$dep','$course','$sem',NOW())";
-        $result = mysqli_query($conn, $query);
-        if ($result) {
-          // Registration successful
-          $err = "<h3 align='center' style='color: blue'>Registration successful!</h3>";
-          header("Location: Login1.php");
-          exit;
-        } else {
-          // Handle the case when the insert query fails
-          $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
-        }
-
+        // Handle the case when the insert query fails
+        $err = "<h3 align='center' style='color: red'>Registration failed. Please try again.</h3>";
       }
+
     }
   }
+}
 
-  ?>
+?>
 
 <!DOCTYPE HTML>
 
@@ -157,8 +157,8 @@ if (isset($save)) {
 
 
             <div class="form-group">
-              <input type="Name" class="form-control" id="inputName" style="color:white; font-size: 1.2em"
-                placeholder="Name" name="n" required>
+              <input type="text" class="form-control" id="inputName" style="color:white; font-size: 1.2em"
+                placeholder="Name" name="n" pattern="[A-Za-z ]+" required>
             </div>
 
             <div class="form-group">

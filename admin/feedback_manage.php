@@ -219,7 +219,7 @@ if (!isset($_SESSION['admin'])) {
                                     <div class="card1" style="padding: 10px">
                                         <div style="color: black">
                                             <div class="header">
-                                                <h4 class="title" style="color:orange">Manage Faculty</h4>
+                                                <h4 class="title" style="color:orange">Manage Feedback</h4>
                                             </div>
                                             <div class="content" style="padding: 10px">
                                                 <div class="row" >

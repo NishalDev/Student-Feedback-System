@@ -20,24 +20,16 @@ if (!isset($_SESSION['admin'])) {
 extract($_POST);
 
 if (isset($save)) {
-    foreach ($q as $question) {
-        $query = "INSERT INTO feedback (department_id, course_id, sem_id, subject_id, Option_id, question) VALUES ('$dep', '$course', '$sem', '$sub', '$opt', '$question')";
-        // Check if the option key exists in the $opt array
-
-        $result = mysqli_query($conn, $query);
-
-        if (!$result) {
-            $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
-            break; // Exit the loop if an error occurs
-        }
+    $query = "INSERT INTO feedback_questions (department_id, course_id, sem_id, subject_id, question_text) VALUES ('$dep', '$course', '$sem', '$sub', '$question_text')";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
     }
-
     if (!isset($err)) {
         $err = "<h3 align='center' style='color: blue'>Successful!</h3>";
     }
 }
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -46,24 +38,17 @@ if (isset($save)) {
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
     <title>Faculty Feedback System</title>
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-
     <!-- Animation library for notifications   -->
     <link href="assets/css/animate.min.css" rel="stylesheet" />
-
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet" />
-
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
-
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
@@ -74,7 +59,6 @@ if (isset($save)) {
             background-image: url('assets/img/image7.jpg');
             background-size: cover;
             background-repeat: no-repeat;
-
         }
 
         .panel-default {
@@ -82,30 +66,23 @@ if (isset($save)) {
             margin-left: 10px;
             margin-right: 50px;
             padding: 10px 10px;
-
         }
     </style>
-
 </head>
 
 <body>
 
     <div class="wrapper" style="width: 2000px">
         <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
-
             <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
-
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Hello Admin
                     </a>
-
                     <img src="assets/img/admin.jpeg" style="width:200px;height:180px;border-radius:50%">
-
                     <br>
                     <!--<img src = "../../images/<?php echo $users['email']; ?>/<?php echo $users['image']; ?>" style="width:100px; height:500px"> -->
-
                 </div>
                 <br>
                 <ul class="nav">
@@ -116,7 +93,6 @@ if (isset($save)) {
                         </a>
                     </li>
                     <br>
-
                     <li class="dropdown" style="color:black">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-fw"></i>
@@ -124,7 +100,6 @@ if (isset($save)) {
                                 Faculty
                                 <b class="caret"></b>
                             </p>
-
                         </a>
                         <ul class="dropdown-menu" style="background-color: black">
                             <li><a href="add_faculty1.php"><i class="fa fa-plus fa-fw"
@@ -132,11 +107,11 @@ if (isset($save)) {
                             </li>
                             <li><a href="show_faculty1.php"><i class="fa fa-eye"
                                         style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage Faculty
-                                </a></li>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <br>
-
                     <li class="dropdown" style="color:black">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-fw"></i>
@@ -144,23 +119,22 @@ if (isset($save)) {
                                 Student
                                 <b class="caret"></b>
                             </p>
-
                         </a>
                         <ul class="dropdown-menu" style="background-color: black">
                             <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
                                         style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
-                                    Student</a></li>
+                                    Student
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <br>
-
                     <li class="dropdown" style="color:black">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-book"></i>
                             Feedback
                             <b class="caret"></b>
                             </p>
-
                         </a>
                         <ul class="dropdown-menu" style="background-color: black">
                             <li><a href="feedback1.php"><i class="fa fa-eye"
@@ -176,9 +150,6 @@ if (isset($save)) {
                         </ul>
                     </li>
                     <br>
-
-
-
                 </ul>
             </div>
         </div>
@@ -224,23 +195,18 @@ if (isset($save)) {
             <form method="post" style="margin-top: 80px">
                 <div style="color: red ">
                     <?php
-
                     echo @$err;
-
                     ?>
                     <div class="content">
                         <div class="container-fluid">
                             <div class="row panel panel-default" style="width: auto ">
                                 <div class="col-md-12">
-
                                     <div class="header">
                                         <h4 class="title" style="color:orange">Add Feedback Questions</h4>
                                     </div>
-
                                     <div class="content">
                                         <div class="row">
                                             <div class="col-md-3">
-
                                                 <select class="form-control" id="inputDepartment"
                                                     style="font-size: 1.2em; background-color: transparent " name="dep"
                                                     require onchange="getCourse()">
@@ -262,11 +228,7 @@ if (isset($save)) {
                                                 </select>
                                             </div>
 
-
-
-
                                             <div class="col-md-3">
-
                                                 <select class=" form-control" id="inputCourse"
                                                     style="font-size: 1.2em; background-color: transparent"
                                                     name="course" onchange="getSubject()" required>
@@ -285,15 +247,9 @@ if (isset($save)) {
                                                     }
                                                     ?>
                                                 </select>
-
                                             </div>
 
-
-
-
-
                                             <div class="col-md-3">
-
                                                 <select class="form-control" id="inputSemester"
                                                     style="font-size: 1.2em; background-color: transparent" name="sem"
                                                     onchange="getSubject()" required>
@@ -313,7 +269,6 @@ if (isset($save)) {
                                                     ?>
                                                 </select>
                                             </div>
-
                                         </div>
                                         <div style="margin-top: 20px;">
                                             <div class="row">
@@ -324,7 +279,6 @@ if (isset($save)) {
                                                         <option value="" disabled selected style="color: black;">
                                                             Subject</option>
                                                         <?php
-                                                        // Assuming you have a database connection established, fetch semester data from the database
                                                         $query = "SELECT * FROM subject";
                                                         $result = mysqli_query($conn, $query);
                                                         while ($row = mysqli_fetch_assoc($result)) {
@@ -341,53 +295,18 @@ if (isset($save)) {
                                         </div>
                                     </div>
                                     <div style="margin-top: 20px;">
-                                        <div id="questionFields">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <textarea class="form-control" placeholder="Question" name="q[]"
-                                                            required></textarea>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-md-3">
-                                                    <select class="form-control" id="inputSubject"
-                                                        style="font-size: 1.2em; background-color: transparent"
-                                                        name="opt" required>
-                                                        <option value="" disabled selected style="color: black;">Options
-                                                        </option>
-                                                        <?php
-                                                        // Assuming you have a database connection established, fetch options data from the database
-                                                        $query = "SELECT * FROM options";
-                                                        $result = mysqli_query($conn, $query);
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            echo "<option value='" . $row['Option_id'] . "' style='color: black;'>" . $row['option1'] . ", " . $row['option2'] . ", " . $row['option3'] . ", " . $row['option4'] . ", " . $row['option5'] . "</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-
-
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="button" class="btn btn-primary" value="New Field"
-                                                            onclick="addNewField()">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div style="margin-left: 15px;">
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <input type="submit" class="btn btn-success" name="save"
-                                                        value="Add Question">
-                                                </div>
+                                        <label for="question_text">Question:</label><br>
+                                            <input type="text" name="question_text" id="question_text" required><br><br>
+                                    </div>
+                                    <div style="margin-left: 15px;">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-success" name="save"
+                                                    value="Add Question">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
             </form>
         </div>
     </div>
@@ -396,21 +315,17 @@ if (isset($save)) {
 <!--   Core JS Files   -->
 <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-
 <!--  Charts Plugin -->
 <script src="assets/js/chartist.min.js"></script>
-
 <!--  Notifications Plugin    -->
 <script src="assets/js/bootstrap-notify.js"></script>
-
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+
 <script>
     function addNewField() {
         var newField = document.createElement('div');
@@ -421,14 +336,10 @@ if (isset($save)) {
             '</div>' +
             '</div>' +
             '</div>';
-
-
         var questionFields = document.getElementById('questionFields');
         questionFields.appendChild(newField);
     }
 </script>
-
-
 
 </html>
 <?php ?>

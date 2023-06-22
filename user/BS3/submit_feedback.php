@@ -60,7 +60,7 @@ $feedbackId = $_GET['feedback_id'];
     $questionData = json_decode($decodedQuestions, true);
 
     // Check if decoding was successful
-    if ($questionData !== null) {
+    if ($questionData !== NULL) {
         // Iterate over each question and display them
         foreach ($questionData as $question) {
             $questionId = $question['question_id'];
