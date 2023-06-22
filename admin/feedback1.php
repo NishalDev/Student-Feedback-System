@@ -6,7 +6,6 @@
         }
     }
 </script>
-
 <?php
 session_start();
 include('../dbconfig.php');
@@ -24,12 +23,29 @@ if (isset($save)) {
     $result = mysqli_query($conn, $query);
     if (!$result) {
         $err = "<h3 align='center' style='color: red'>Please try again.</h3>";
-    }
-    if (!isset($err)) {
-        $err = "<h3 align='center' style='color: blue'>Successful!</h3>";
+    } else {
+        $questionId = mysqli_insert_id($conn); // Get the ID of the inserted question
+
+        // Store the options in the feedback_question_options table
+        $option1 = mysqli_real_escape_string($conn, $_POST['option1']);
+        $option2 = mysqli_real_escape_string($conn, $_POST['option2']);
+        $option3 = mysqli_real_escape_string($conn, $_POST['option3']);
+        $option4 = mysqli_real_escape_string($conn, $_POST['option4']);
+        $option5 = mysqli_real_escape_string($conn, $_POST['option5']);
+
+        // Insert the options into the table
+        $optionsQuery = "INSERT INTO feedback_question_options (question_id, option_text) VALUES ('$questionId', '$option1'), ('$questionId', '$option2'), ('$questionId', '$option3'), ('$questionId', '$option4'), ('$questionId', '$option5')";
+        $optionsResult = mysqli_query($conn, $optionsQuery);
+
+        if (!$optionsResult) {
+            $err = "<h3 align='center' style='color: red'>Failed to store options. Please try again.</h3>";
+        } else {
+            $err = "<h3 align='center' style='color: blue'>Question and options stored successfully!</h3>";
+        }
     }
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -296,8 +312,34 @@ if (isset($save)) {
                                     </div>
                                     <div style="margin-top: 20px;">
                                         <label for="question_text">Question:</label><br>
-                                            <input type="text" name="question_text" id="question_text" required><br><br>
+                                        <input type="text" name="question_text" id="question_text" required><br><br>
                                     </div>
+
+                                    <div style="margin-top: 20px;">
+                                        <label for="option1">Option 1:</label><br>
+                                        <input type="text" name="option1" id="option1" required><br><br>
+                                    </div>
+
+                                    <div style="margin-top: 20px;">
+                                        <label for="option2">Option 2:</label><br>
+                                        <input type="text" name="option2" id="option2" required><br><br>
+                                    </div>
+
+                                    <div style="margin-top: 20px;">
+                                        <label for="option3">Option 3:</label><br>
+                                        <input type="text" name="option3" id="option3" required><br><br>
+                                    </div>
+
+                                    <div style="margin-top: 20px;">
+                                        <label for="option4">Option 4:</label><br>
+                                        <input type="text" name="option4" id="option4" required><br><br>
+                                    </div>
+
+                                    <div style="margin-top: 20px;">
+                                        <label for="option5">Option 5:</label><br>
+                                        <input type="text" name="option5" id="option5" required><br><br>
+                                    </div>
+
                                     <div style="margin-left: 15px;">
                                         <div class="col-md-4">
                                             <div class="form-group">

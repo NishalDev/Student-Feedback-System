@@ -1,47 +1,58 @@
 <?php
 // Assuming you have a database connection established
 include('../dbconfig.php');
+
 // Retrieve the selected department, course, semester, and subject from the AJAX request
 $dep = $_POST['dep'];
 $course = $_POST['course'];
 $sem = $_POST['sem'];
 $subject = $_POST['subject'];
+//$studentId = $_POST['stu_id'];
 
 // Prepare a query to fetch the questions and options based on the selected criteria
-$query = "SELECT * FROM feedback WHERE department_id = '$dep' AND course_id = '$course' AND sem_id = '$sem' AND subject_id = '$subject'";
+$query = "SELECT * FROM feedback_questions WHERE department_id = '$dep' AND course_id = '$course' AND sem_id = '$sem' AND subject_id = '$subject'";
 $result = mysqli_query($conn, $query);
 
-// Check if there are any records
 if (mysqli_num_rows($result) > 0) {
-    $output = '';
+    $serialNumber = 1; // Counter variable for the serial number
+    // echo $studentId;
+    // echo '<input type="hidden" name="student_id" value="' . $studentId . '">'; // Hidden field for student ID
+    echo '<form action="store_responses.php" method="POST">'; // Form to submit the responses
 
-    // Loop through each row
     while ($row = mysqli_fetch_assoc($result)) {
-        // Get the question and options
-        $question = $row['question'];
-        $optionId = $row['Option_id'];
+        $questionId = $row['question_id'];
+        $question = $row['question_text'];
 
-        // Retrieve the options from the database based on the optionId
-        $optionsQuery = "SELECT option1, option2, option3, option4, option5 FROM options WHERE Option_id = '$optionId'";
+        // Retrieve the options for the current question
+        $optionsQuery = "SELECT * FROM feedback_question_options WHERE question_id = '$questionId'";
         $optionsResult = mysqli_query($conn, $optionsQuery);
-        $optionsRow = mysqli_fetch_assoc($optionsResult);
 
-        // Extract the options from the row
-        $options = array_values($optionsRow);
+        echo '<div>';
+        echo '<p>' . $serialNumber . '. ' . $question . '</p>';
 
-        // Display the question
-        $output .= "<h3 contenteditable='true' class='editable-question'>$question</h3>";
+        if (mysqli_num_rows($optionsResult) > 0) {
+            echo '<ul>';
 
-        // Display the options
-        $output .= "<ul>";
-        foreach ($options as $option) {
-            $output .= "<li>$option</li>";
+            while ($optionRow = mysqli_fetch_assoc($optionsResult)) {
+                $optionText = $optionRow['option_text'];
+
+                echo '<li>';
+                echo $optionText;
+                echo '</li>';
+            }
+            echo '</ul>';
+        } else {
+            echo 'No options found for this question.';
         }
-        $output .= "</ul>";
+
+        echo '</div>';
+
+        $serialNumber++; // Increment the serial number
     }
 
-    echo $output; // Send the HTML content back as the response
+    echo '<input type="submit" value="Submit">'; // Submit button
+    echo '</form>';
 } else {
-    echo "No questions found for the selected criteria.";
+    echo 'No questions found for the selected criteria.';
 }
 ?>
