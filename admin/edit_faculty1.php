@@ -154,10 +154,6 @@ error_reporting(0);
                       </ul>
                     </li>
                     <br>
-
-
-
-
                 </ul>
             </div>
         </div>
