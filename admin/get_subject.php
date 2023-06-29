@@ -20,6 +20,10 @@ if (isset($_GET['courseId']) && isset($_GET['semesterId'])) {
         $subjects[] = $row;
     }
 
+    // Close the prepared statement and database connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+
     // Return the subjects as a JSON response
     echo json_encode($subjects);
 }

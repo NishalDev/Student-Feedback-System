@@ -1,5 +1,3 @@
-
-
 <?php
 // Assuming you have a database connection established
 require('../dbconfig.php');
@@ -20,6 +18,10 @@ if (isset($_GET['departmentId'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $courses[] = $row;
     }
+
+    // Close the prepared statement and database connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
     // Return the courses as a JSON response
     echo json_encode($courses);

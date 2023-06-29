@@ -131,7 +131,6 @@ session_start();
            <div style="color: red "><?php
 
              echo @$err;
-
                ?>
            </div>
 

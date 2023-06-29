@@ -9,6 +9,7 @@ if ($user == "") {
 $sql = mysqli_query($conn, "select * from stu_regi where stu_email='$user' ");
 $users = mysqli_fetch_assoc($sql);
 //print_r($users);
+
 ?>
 <!doctype html>
 <html lang="en">

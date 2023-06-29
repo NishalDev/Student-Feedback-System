@@ -1,0 +1,78 @@
+$ curl -d "text=great" http://text-processing.com/api/sentiment/
+{
+        "probability": {
+                "neg": 0.39680315784838732,
+                "neutral": 0.28207586364297021,
+                "pos": 0.60319684215161262
+        },
+        "label": "pos"
+}
+
+$ curl -d "text=terrible" http://text-processing.com/api/sentiment/
+{
+        "probability": {
+                "neg": 0.68846305481785608,
+                "neutral": 0.38637609994709854,
+                "pos": 0.31153694518214375
+        },
+        "label": "neg"
+}
+
+$ curl -d "text=hi friend" http://text-processing.com/api/sentiment/
+{
+        "probability": {
+                "neg": 0.59797768649386562,
+                "neutral": 0.74939503025120124,
+                "pos": 0.40202231350613421
+        },
+        "label": "neutral"
+
+
+
+
+
+
+
+
+        Return Value
+On success, a 200 OK response will be returned containing a JSON object that looks like this:
+
+{
+        "label": "pos",
+        "probability": {
+                "pos": 0.85,
+                "neg": 0.15,
+                "neutral": 0.4
+        }
+}
+Errors
+A 400 Bad Request response will be returned under the following conditions:
+
+no value for text is provided
+text exceeds 80,000 characters
+A 503 Throttled response will be returned if you exceed the daily request limit. Signup for the Mashape Text-Processing API to get a higher limit plan.
+
+
+
+
+
+
+
+
+
+
+
+
+
+if($row[neg] > $row[neu]) && ($row[neg] > $row[pos])
+                                   {
+                                       echo " <p style='color:green;'>"."<b>". "Negative"."</b>"."</p>";
+                                   }
+elseif($row[pos] > $row[neu])
+                                   {
+                                       echo " <p style='color:red;'>"."<b>"."Positive"."</b>"."</p>";
+                                   }
+                                   else
+                                   {
+                                       echo" <p style='color:orange;'>"."<b>"."Neutral"."</b>"."</p>";
+                                   }
