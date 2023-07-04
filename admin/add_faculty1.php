@@ -128,21 +128,8 @@ if (isset($save)) {
                                 </a></li>
                         </ul>
                     </li>
-                    <br>
-                    <li class="dropdown" style="color:black">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user fa-fw"></i>
-                            <p>
-                                Student
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <ul class="dropdown-menu" style="background-color: black">
-                            <li><a href="display_student1.php"><i class="fa fa-plus fa-fw"
-                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i>Manage
-                                    Student</a></li>
-                        </ul>
-                    </li>
+                 
+                    
                     <br>
                     <li class="dropdown" style="color:black">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -160,9 +147,7 @@ if (isset($save)) {
                                     Feedback</a>
                             </li>
 
-                            <li><a href="feedback_average1.php"><i class="fa fa-eye"
-                                        style="height: 2px;width:2px;margin-right:50px;color:white"></i> Feedback
-                                    Average </a></li>
+                            
                         </ul>
                     </li>
                     <br>

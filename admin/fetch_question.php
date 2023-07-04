@@ -52,7 +52,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 
     echo '<input type="submit" value="Submit">';
-    echo '<input type="submit" value="Edit">';
+   
     // echo '</div>'; // Submit button
     echo '</form>';
 } else {

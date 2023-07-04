@@ -107,18 +107,7 @@ include('../dbconfig.php');
                         </li>
 
 
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i>Student<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-
-                                <li>
-                                    <a href="dashboard.php?info=display_student"><i class="fa fa-eye"></i> Manage
-                                        Student</a>
-                                </li>
-
-                            </ul>
-                        </li>
-
+                    
 
 
                         <!-- feedback-->
@@ -129,8 +118,7 @@ include('../dbconfig.php');
                                 <li><a href="dashboard.php?info=feedback"><i class="fa fa-eye"></i> feedback</a></li>
                                 <li><a href="dashboard.php?info=feedback_manage"><i class="fa fa-eye"></i> Manage
                                         Feedback</a></li>
-                                <li><a href="dashboard.php?info=feedback_average"><i class="fa fa-eye"></i> feedback
-                                        Average</a></li>
+                            
 
 
                             </ul>
