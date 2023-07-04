@@ -222,7 +222,7 @@ if (!isset($_SESSION['admin'])) {
                                                 <h4 class="title" style="color:orange">Manage Feedback</h4>
                                             </div>
                                             <div class="content" style="padding: 10px">
-                                                <div class="row" >
+                                                <div class="row">
                                                     <div class="col-md-3">
                                                         <select class="form-control" id="inputDepartment"
                                                             style="font-size: 1.2em; background-color: transparent "
@@ -284,7 +284,6 @@ if (!isset($_SESSION['admin'])) {
                                                             ?>
                                                         </select>
                                                     </div>
-
                                                 </div>
                                                 <div class="row">
                                                     <div style="margin-top: 20px;">
@@ -310,7 +309,6 @@ if (!isset($_SESSION['admin'])) {
                                                             </select>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <input type="button" class="btn btn-primary" value="Proceed"
@@ -319,22 +317,16 @@ if (!isset($_SESSION['admin'])) {
                                                     </div>
                                                 </div>
                                                 <div id="questionsContainer"></div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
             </form>
-
-
-
         </div>
     </div>
-
-
 </body>
 
 <!--   Core JS Files   -->
@@ -381,7 +373,6 @@ if (!isset($_SESSION['admin'])) {
             }
         });
     }
-
 </script>
 
 </html>

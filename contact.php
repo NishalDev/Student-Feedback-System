@@ -38,14 +38,14 @@ $err="<font color='green'>Admin Will Contact you soon</font>";
 						
 						<div class="controls">
                             <label>Name:</label>
-                            <input type="text" class="form-control" name="n" required data-validation-required-message="Please enter your name.">
+                            <input type="text" class="form-control" name="n" required data--required-message="Please enter your name.">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Mobile Number:</label>
-                            <input type="number" class="form-control" name="m" required data-validation-required-message="Please enter your phone number.">
+                            <input type="number" class="form-control" name="m" required data--required-message="Please enter your phone number.">
                         </div>
                     </div>
                     <div class="control-group form-group">

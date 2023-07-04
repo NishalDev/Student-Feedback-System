@@ -5,7 +5,9 @@ include('../../dbconfig.php');
 // Assuming you have already established a database connection
 
 // SQL query to retrieve all rows from a table
-$sql = "SELECT * FROM stu_regi";
+$student_id = $_SESSION['stu_regi'];
+echo $student_id; 
+$sql = "SELECT * FROM stu_regi WHERE stu_email = '$student_id'";
 
 // Execute the query
 $result = mysqli_query($conn, $sql);
@@ -14,30 +16,40 @@ $result = mysqli_query($conn, $sql);
 if ($result) {
     // Check if there are rows returned
     if (mysqli_num_rows($result) > 0) {
-        // Fetch and display each row of data
-        while ($row = mysqli_fetch_assoc($result)) {
-            // Access the columns of each row using $row['column_name']
-            $n = $row['stu_user'];
-            $e = $row['stu_email'];
-            $mob = $row['stu_mob'];
-            $dep = $row['department_id'];
-            $course = $row['course_id'];
-            $sem = $row['sem_id']; // ... and so on for other columns
-            $dep_name = "";
-            $dep_query = mysqli_query($conn, "SELECT department_name FROM department WHERE department_id = '$dep'");
-            if ($dep_row = mysqli_fetch_assoc($dep_query)) {
-                $dep_name = $dep_row['department_name'];
-            }
-            $course_name = "";
-            $course_query = mysqli_query($conn, "SELECT course_name FROM course WHERE course_id = '$course'");
-            if ($course_row = mysqli_fetch_assoc($course_query)) {
-                $course_name = $course_row['course_name'];
-            }
-            $sem_name = "";
-            $sem_query = mysqli_query($conn, "SELECT sem_name FROM semester WHERE sem_id = '$sem'");
-            if ($sem_row = mysqli_fetch_assoc($sem_query)) {
-                $sem_name = $sem_row['sem_name'];
-            }
+        $row = mysqli_fetch_assoc($result);
+        $n = $row['stu_user'];
+        echo $n;
+        
+        // Retrieve and display other data if needed
+        $e = $row['stu_email'];
+        $mob = $row['stu_mob'];
+        $dep = $row['department_id'];
+        $course = $row['course_id'];
+        $sem = $row['sem_id'];
+        // ... and so on for other columns
+        
+        // Retrieve and display department name
+        $dep_name = "";
+        $dep_query = mysqli_query($conn, "SELECT department_name FROM department WHERE department_id = '$dep'");
+        if ($dep_row = mysqli_fetch_assoc($dep_query)) {
+            $dep_name = $dep_row['department_name'];
+            echo $dep_name;
+        }
+        
+        // Retrieve and display course name
+        $course_name = "";
+        $course_query = mysqli_query($conn, "SELECT course_name FROM course WHERE course_id = '$course'");
+        if ($course_row = mysqli_fetch_assoc($course_query)) {
+            $course_name = $course_row['course_name'];
+            echo $course_name;
+        }
+        
+        // Retrieve and display semester name
+        $sem_name = "";
+        $sem_query = mysqli_query($conn, "SELECT sem_name FROM semester WHERE sem_id = '$sem'");
+        if ($sem_row = mysqli_fetch_assoc($sem_query)) {
+            $sem_name = $sem_row['sem_name'];
+            echo $sem_name;
         }
     } else {
         echo "No rows found in the table.";
@@ -113,41 +125,13 @@ mysqli_close($conn);
                         </a>
                     </li>
                     <li>
-                        <a href="table.html">
+                        <a href="give_feedback1.php">
                             <i class="pe-7s-note2"></i>
-                            <p>Table List</p>
+                            <p>Feedback</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="typography.html">
-                            <i class="pe-7s-news-paper"></i>
-                            <p>Typography</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons.html">
-                            <i class="pe-7s-science"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="maps.html">
-                            <i class="pe-7s-map-marker"></i>
-                            <p>Maps</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="notifications.html">
-                            <i class="pe-7s-bell"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
-                    <!-- <li class="active-pro">
-                        <a href="upgrade.html">
-                            <i class="pe-7s-rocket"></i>
-                            <p>Upgrade to PRO</p>
-                        </a>
-                    </li> -->
+
+
                 </ul>
             </div>
         </div>
@@ -243,6 +227,7 @@ mysqli_close($conn);
                                 <div class="header">
                                     <h4 class="title">Edit Profile</h4>
                                 </div>
+                                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                 <div class="content">
                                     <form>
                                         <div class="row">
@@ -258,7 +243,7 @@ mysqli_close($conn);
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Email address</label>
-                                                    <input type="email" class="form-control" value="<?php echo $e; ?>">
+                                                    <input type="email" class="form-control" value="<?php echo $e; ?>"readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -310,8 +295,8 @@ mysqli_close($conn);
                                             </div>
                                         </div> -->
 
-                                        <button type="submit" class="btn btn-info btn-fill pull-right">Update
-                                            Profile</button>
+                                        <button type="submit" onclick="dashboard.php" class="btn btn-info btn-fill pull-right"><-- Dashboard
+                                            </button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -328,7 +313,6 @@ mysqli_close($conn);
                                         <a href="#">
                                             <img class="avatar border-gray" src="assets/img/faces/face-3.jpg"
                                                 alt="..." />
-
                                             <h4 class="title">Mike Andrew<br />
                                                 <small>michael24</small>
                                             </h4>
@@ -346,16 +330,12 @@ mysqli_close($conn);
                                     <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
                                     <button href="#" class="btn btn-simple"><i
                                             class="fa fa-google-plus-square"></i></button>
-
                                 </div>
                             </div>
                         </div> -->
-
                     </div>
                 </div>
             </div>
-
-
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">
@@ -371,14 +351,11 @@ mysqli_close($conn);
                                 </a>
                             </li>
                         </ul>
-                    </nav>                   
+                    </nav>
                 </div>
             </footer>
-
         </div>
     </div>
-
-
 </body>
 
 <!--   Core JS Files   -->

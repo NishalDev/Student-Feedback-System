@@ -4,12 +4,14 @@ include('../dbconfig.php');
 
 error_reporting(0);
 
-$user= $_SESSION['faculty_login'];
-if($user=="")
-{header('location:../home.php');}
+$user = $_SESSION['faculty_login'];
+if ($user == "") {
+    header('location:../home.php');
+}
 
-$sql=mysqli_query($conn,"select * from faculty where email='$user' ");
-$users=mysqli_fetch_assoc($sql);
+$sql = mysqli_query($conn, "select * from fac_regi where Fac_email='$user' ");
+$users = mysqli_fetch_assoc($sql);
+//print_r($users);
 ?>
 
 
@@ -47,14 +49,12 @@ $users=mysqli_fetch_assoc($sql);
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <style>
+        .main-panel {
+            background-image: url('assets/img/image7.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
 
-      .main-panel{
-        background-image: url('assets/img/image7.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-
-      }
-
+        }
     </style>
 
 </head>
@@ -68,11 +68,12 @@ $users=mysqli_fetch_assoc($sql);
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
-                        Hello <?php echo $users['Name'];?>
-                     </a>
-                     <br>
-                    
-                     <img src="images_f/f1.jpeg" style="width:200px;height:180px;border-radius:50%">
+                        Hello
+                        <?php echo $users['name']; ?>
+                    </a>
+                    <br>
+
+
 
                 </div>
 
@@ -83,18 +84,12 @@ $users=mysqli_fetch_assoc($sql);
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="Update_profile1.php">
-                            <i class="pe-7s-user"></i>
-                            <p>View/Edit Profile</p>
-                        </a>
-                    </li>
 
                     <li>
-                              <a href="Feedback1.php">
-                                 <i class="pe-7s-like2"></i>
-                                 <p>Feedback</p>
-                               </a>
+                        <a href="give_feedback1.php">
+                            <i class="pe-7s-like2"></i>
+                            <p>Feedback Report</p>
+                        </a>
 
                     </li>
 
@@ -107,12 +102,13 @@ $users=mysqli_fetch_assoc($sql);
             <nav class="navbar navbar-inverse navbar-fixed">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="#">Dashboard</a>
                     </div>
                     <div class="collapse navbar-collapse">
@@ -150,14 +146,14 @@ $users=mysqli_fetch_assoc($sql);
                         </div>
 
                         <div class="col-md-5">
-                            <div class="card">
 
-                                   <h1>Hello <?php echo $users['Name'];?> </h3>
+                            <h1>Hello
+                                <?php echo $users['name']; ?>
+                                </h3>
 
-                                    <hr>
-                                    <h3>Welcome to your dashboard </h3>
+                                <hr>
+                                <h3>Welcome to your dashboard </h3>
 
-                            </div>
                         </div>
 
                         <div class="col-md-4">

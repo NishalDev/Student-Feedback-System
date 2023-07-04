@@ -36,7 +36,7 @@ if (!isset($_SESSION['admin'])) {
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="assets/css/demo.css" rel="stylesheet" />
+
 
 
     <!--     Fonts and icons     -->
@@ -220,9 +220,8 @@ if (!isset($_SESSION['admin'])) {
                                                 <div class="row" style="padding: 10px">
 
                                                     <?php
-                                                    echo "<table class='table table-responsive table-bordered table-striped table-hover' style=margin:15px;>";
+                                                    echo "<table class='table table-responsive table-bordered table-striped table-hover' style='margin:15px;'>";
                                                     echo "<tr>";
-
                                                     echo "<th>S.No</th>";
                                                     echo "<th>Name</th>";
                                                     echo "<th>Email</th>";
@@ -230,15 +229,12 @@ if (!isset($_SESSION['admin'])) {
                                                     echo "<th>Course</th>";
                                                     echo "<th>Semester</th>";
                                                     echo "<th>Subject</th>";
-
-                                                    echo "<th>Update</th>";
                                                     echo "<th>Delete</th>";
                                                     echo "</tr>";
                                                     $i = 1;
                                                     $query = "SELECT r.Fac_id, r.Fac_user, r.Fac_email, s.department_id, s.course_id, s.sem_id, s.subject_id
-                                                FROM fac_regi r
-                                                INNER JOIN faculty_subject s ON r.Fac_id = s.Fac_id";
-
+                                                    FROM fac_regi r
+                                                    INNER JOIN faculty_subject s ON r.Fac_id = s.Fac_id";
                                                     $result = mysqli_query($conn, $query);
 
                                                     if ($result) {
@@ -279,8 +275,9 @@ if (!isset($_SESSION['admin'])) {
                                                             echo "<td>" . $semester . "</td>";
                                                             echo "<td>" . $subject . "</td>";
 
-                                                            // Rest of your code...
-                                                    
+                                                            echo "<td><button onclick='deleteFaculty(" . $row['Fac_id'] . ")'>Delete</button></td>";
+
+
                                                             echo "</tr>";
                                                             $i++;
                                                         }
@@ -288,11 +285,7 @@ if (!isset($_SESSION['admin'])) {
                                                         // Handle the case when the query execution fails
                                                         echo "Error: " . mysqli_error($conn);
                                                     }
-
-
-
                                                     ?>
-
 
                                                 </div>
 
@@ -303,11 +296,7 @@ if (!isset($_SESSION['admin'])) {
                             </div>
                         </div>
                     </div>
-
             </form>
-
-
-
         </div>
     </div>
 
@@ -333,12 +322,29 @@ if (!isset($_SESSION['admin'])) {
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
 <script type="text/javascript">
-    function deletes(id) {
-        a = confirm('Are You Sure To Remove This Record ?')
+    function deleteFaculty(id) {
+        console.log('Delete function called with ID:', id);
+        console.log('AAAAAAAAAAAAAAAAAAAAAAA');
+        var a = confirm('Are you sure you want to remove this faculty record?');
         if (a) {
-            window.location.href = 'delete_faculty.php?id=' + id;
+            // Send AJAX request
+            $.ajax({
+                url: 'delete_faculty.php',
+                type: 'GET',
+                data: { id: id },
+                success: function (response) {
+                    console.log('Delete request successful');
+                    // Optionally, perform any additional actions after successful deletion
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting faculty:', error);
+                    // Handle the error condition
+                }
+            });
         }
     }
+
 </script>
+
 
 </html>

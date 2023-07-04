@@ -129,7 +129,7 @@ $que=mysqli_query($conn,"SELECT admin_email AND admin_pass FROM admin WHERE admi
             <div class="form-group">
                 <input type="password" class="form-control" id="inputPassword" style="color:whit;font-size: 16px" placeholder="Password" name="pass" required>
             </div>
-
+            <a href="FORGOT.php"><b>Forgot Password</b></a><br><br>
 
 						<input type="submit" value="Login" class="btn btn-info" style=" background-color: #0066ff"  name="login"/>
 

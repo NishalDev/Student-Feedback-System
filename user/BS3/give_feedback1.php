@@ -48,28 +48,27 @@ if ($result) {
 <body>
     <div class="wrapper">
         <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
-            <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="give_feedback.php" class="simple-text">
-                        Student Feedback System
+                        SFS
                     </a>
                 </div>
                 <ul class="nav">
                     <li>
-                        <a href="dashboard.html">
+                        <a href="dashboard.php">
                             <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li>
-                        <a href="user.html">
+                        <a href="user.php">
                             <i class="pe-7s-user"></i>
                             <p>User Profile</p>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="table.html">
+                        <a href="give_feedback1.php">
                             <i class="pe-7s-note2"></i>
                             <p>Feedback</p>
                         </a>
@@ -77,6 +76,7 @@ if ($result) {
                 </ul>
             </div>
         </div>
+
         <div class="main-panel">
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">

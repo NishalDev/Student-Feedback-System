@@ -3,7 +3,7 @@ session_start();
 include('../dbconfig.php');
 error_reporting(0);
 
-$user= $_SESSION['user'];
+$user= $_SESSION['stu_regi'];
 if($user=="")
 {header('location:../home.php');}
 $sql=mysqli_query($conn,"select * from user where email='$user' ");

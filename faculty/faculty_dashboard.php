@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-include('../../dbconfig.php');
-$user = $_SESSION['stu_regi'];
+include('../dbconfig.php');
+$user = $_SESSION['faculty_login'];
 if ($user == "") {
-    header('location:../index.php');
+    header('location:index.php');
 }
-$sql = mysqli_query($conn, "select * from stu_regi where stu_email='$user' ");
+$sql = mysqli_query($conn, "select * from fac_regi where Fac_email='$user' ");
 $users = mysqli_fetch_assoc($sql);
 //print_r($users);
 
@@ -59,21 +59,16 @@ $users = mysqli_fetch_assoc($sql);
 
                 <ul class="nav">
                     <li class="active">
-                        <a href="dashboard.php">
+                        <a href="faculty_dashboard.php">
                             <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
+
                     <li>
-                        <a href="user.php">
-                            <i class="pe-7s-user"></i>
-                            <p>User Profile</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="give_feedback1.php">
+                        <a href="feedback.php">
                             <i class="pe-7s-note2"></i>
-                            <p>Feedback</p>
+                            <p>Feedback Report</p>
                         </a>
                     </li>
                 </ul>
@@ -214,7 +209,7 @@ $users = mysqli_fetch_assoc($sql);
 
         $.notify({
             icon: 'pe-7s-study',
-            message: "Welcome to Student Feedback System"
+            message: "Welcome to Faculty Dashboard"
 
         }, {
             type: 'info',

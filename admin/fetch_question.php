@@ -48,9 +48,12 @@ if (mysqli_num_rows($result) > 0) {
         echo '</div>';
 
         $serialNumber++; // Increment the serial number
+       
     }
 
-    echo '<input type="submit" value="Submit">'; // Submit button
+    echo '<input type="submit" value="Submit">';
+    echo '<input type="submit" value="Edit">';
+    // echo '</div>'; // Submit button
     echo '</form>';
 } else {
     echo 'No questions found for the selected criteria.';

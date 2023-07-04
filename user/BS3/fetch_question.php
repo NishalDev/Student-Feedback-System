@@ -18,7 +18,11 @@ if (mysqli_num_rows($result) > 0) {
    // echo $studentId;
    // echo '<input type="hidden" name="student_id" value="' . $studentId . '">'; // Hidden field for student ID
     echo '<form action="store_responses.php" method="POST">'; // Form to submit the responses
-
+    echo '<input type="hidden" name="dep" value="' . $dep . '">';
+    echo '<input type="hidden" name="course" value="' . $course . '">';
+    echo '<input type="hidden" name="sem" value="' . $sem . '">';
+    echo '<input type="hidden" name="subject" value="' . $subject . '">';
+    
     while ($row = mysqli_fetch_assoc($result)) {
         $questionId = $row['question_id'];
         $question = $row['question_text'];
@@ -34,12 +38,7 @@ if (mysqli_num_rows($result) > 0) {
             echo '<ul>';
 
             // Add a default option for each question
-            echo '<li>';
-            echo '<label>';
-            echo '<input type="radio" name="question_' . $questionId . '" value="" checked>';
-            echo '<span style="margin-left: 5px;">No option selected</span>';
-            echo '</label>';
-            echo '</li>';
+
 
             while ($optionRow = mysqli_fetch_assoc($optionsResult)) {
                 $optionId = $optionRow['option_id'];
@@ -53,6 +52,7 @@ if (mysqli_num_rows($result) > 0) {
                 echo '</li>';
             }
             echo '</ul>';
+            
         } else {
             echo 'No options found for this question.';
         }
@@ -61,6 +61,11 @@ if (mysqli_num_rows($result) > 0) {
 
         $serialNumber++; // Increment the serial number
     }
+
+    // Add the comment section
+    echo '<div>';
+    echo '<textarea name="comment" id="comment" rows="3" cols="50" placeholder="Enter your comment here..."></textarea>';
+    echo '</div>';
 
     echo '<input type="submit" value="Submit">'; // Submit button
     echo '</form>';
